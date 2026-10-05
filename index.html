@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathCraft: Ultimate Visual Mathematics Academy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="theme-light">
+  <div class="app-layout">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="4"/>
+            <path d="M7 12h10"/>
+            <path d="M12 7v10"/>
+            <circle cx="8" cy="8" r="1" fill="currentColor"/>
+            <circle cx="16" cy="16" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>MathCraft</h1>
+          <span class="brand-tagline">Comprehensive Visual Math & Hacks Academy</span>
+        </div>
+      </div>
+
+      <div class="header-stats">
+        <div class="stat-pill coins-pill" id="header-coins-pill" title="Earned MathCraft Coins">
+          <span class="stat-icon">🪙</span>
+          <span class="stat-value" id="user-coins">50</span>
+          <span class="stat-label">Coins</span>
+        </div>
+        <div class="stat-pill xp-pill" title="Experience Points">
+          <span class="stat-icon">✨</span>
+          <span class="stat-value" id="user-xp">0</span>
+          <span class="stat-label">XP</span>
+        </div>
+        <div class="stat-pill streak-pill" title="Practice Streak">
+          <span class="stat-icon">🔥</span>
+          <span class="stat-value" id="user-streak">1</span>
+          <span class="stat-label">Streak</span>
+        </div>
+        <button id="btn-language" class="stat-pill lang-pill" title="Choose Language / भाषा / Idioma">
+          <span class="stat-icon">🌐</span>
+          <span id="current-lang-label">Language</span>
+        </button>
+        <button id="shop-trigger-btn" class="stat-pill shop-pill" title="Rewards Shop">
+          <span class="stat-icon">🎁</span>
+          <span data-i18n="shop_btn">Shop</span>
+        </button>
+        <button id="badge-trigger-btn" class="stat-pill badge-pill" title="Mastery Badges">
+          <span class="stat-icon">🏆</span>
+          <span class="stat-value" id="badge-count">0</span>
+        </button>
+        <button id="sound-toggle" class="icon-btn" title="Toggle Sound FX"><span id="sound-icon">🔊</span></button>
+        <button id="theme-toggle" class="icon-btn" title="Toggle Theme"><span id="theme-icon">🌙</span></button>
+      </div>
+    </header>
+
+    <!-- Main Category Navigation Bar -->
+    <nav class="topic-navigation">
+      <div class="nav-container">
+        <button class="topic-tab active" data-topic="arithmetic">➕ Arithmetic & Numbers</button>
+        <button class="topic-tab" data-topic="powers">⚡ Powers & Roots</button>
+        <button class="topic-tab" data-topic="fractions-applied">🍰 Fractions, Money & Time</button>
+        <button class="topic-tab" data-topic="algebra-identities">📐 Algebra & Identities</button>
+        <button class="topic-tab" data-topic="geometry-3d">🌐 Geometry, Angles & 3D Vectors</button>
+        <button class="topic-tab hacks-tab" data-topic="hacks">🧠 Math Hacks Vault</button>
+        <button class="topic-tab games-tab" data-topic="games">🎮 Games & Blitz</button>
+        <button class="topic-tab practice-tab" data-topic="practice">🎯 Practice Arena</button>
+      </div>
+    </nav>
+
+    <!-- Guided Lesson Quest Hero Banner -->
+    <section class="quest-hero-banner" id="quest-hero-banner">
+      <div class="quest-hero-inner">
+        <div class="quest-hero-text">
+          <div class="quest-pill-tag">
+            <span class="pulse-dot"></span>
+            <span data-i18n="quest_badge">🚀 3-Step Guided Learning Method</span>
+          </div>
+          <h2 data-i18n="quest_hero_title">Learn Any Math Topic With Visuals & Secret Hacks</h2>
+          <p class="quest-hero-desc" data-i18n="quest_hero_desc">
+            1️⃣ Click <strong>Start</strong> for simple explanations & shortcuts &bull;
+            2️⃣ Click <strong>Understood</strong> when ready &bull;
+            3️⃣ Solve <strong>10 Questions</strong> with Hints & Hacks, then click <strong>Submit</strong> to earn coins!
+          </p>
+        </div>
+        <div class="quest-hero-controls">
+          <div class="quest-select-group">
+            <label for="quest-topic-select" data-i18n="choose_topic_label">Select Topic:</label>
+            <select id="quest-topic-select" class="quest-topic-dropdown">
+              <option value="addition">➕ Addition (Make 10 Hack)</option>
+              <option value="subtraction">➖ Subtraction (Regrouping Hack)</option>
+              <option value="multiplication">✖️ Multiplication (11s & Area Hack)</option>
+              <option value="division">➗ Division (Fair Sharing & Halving)</option>
+              <option value="squares">⚡ Squares & Roots (Ending in 5 Hack)</option>
+              <option value="cubes">📦 Cubes & Cube Roots (3D Voxel Hack)</option>
+              <option value="fractions">🍰 Fractions (Butterfly Method Hack)</option>
+              <option value="decimals">🔢 Decimals (100-Grid Hack)</option>
+              <option value="money">💵 Money (Cashier's Count-Up Hack)</option>
+              <option value="time">⏰ Time & Clocks (30°/Hour Hack)</option>
+              <option value="algebra">⚖️ Algebra (Balance Scale Hack)</option>
+              <option value="identities">📜 Algebraic Identities ((a+b)²)</option>
+              <option value="angles">📐 Angles & Protractor</option>
+              <option value="vectors">🌐 3D Vectors (Spatial Projection)</option>
+              <option value="bodmas">🧠 BODMAS / PEMDAS Order of Ops</option>
+              <option value="rounding">🎯 Rounding to 10 & 100</option>
+              <option value="factors">🌲 Factors, Primes & Divisibility</option>
+              <option value="negatives">❄️ Negative Numbers (Thermometer)</option>
+            </select>
+          </div>
+          <button id="btn-start-quest-hero" class="btn btn-hero-start">
+            <span class="btn-icon">🚀</span>
+            <span data-i18n="start_lesson_btn">Start Lesson</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Main Content Area -->
+    <main class="app-main" id="main-content">
+      
+      <!-- ========================================================
+           CATEGORY 1: ARITHMETIC & NUMBERS
+           ======================================================== -->
+      <section class="topic-section active" id="topic-arithmetic">
+        <div class="section-intro">
+          <h2>Core Arithmetic, Negatives & BODMAS</h2>
+          <p>Explore operations visually with ten-frames, column regrouping, integers thermometer, rounding roller, factor trees, and BODMAS order of operations.</p>
+        </div>
+
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-subtab="ar-addition">Addition & Ten-Frames</button>
+          <button class="sub-tab-btn" data-subtab="ar-subtraction">Subtraction & Regrouping</button>
+          <button class="sub-tab-btn" data-subtab="ar-multiplication">Multiplication & Division</button>
+          <button class="sub-tab-btn" data-subtab="ar-negatives">Negative Numbers & Integers</button>
+          <button class="sub-tab-btn" data-subtab="ar-rounding">Rounding Roller</button>
+          <button class="sub-tab-btn" data-subtab="ar-factors">Factors, Primes & GCF</button>
+          <button class="sub-tab-btn" data-subtab="ar-bodmas">BODMAS Hierarchy Tree</button>
+        </div>
+
+        <!-- Subtab: Addition -->
+        <div class="subtab-pane active" id="pane-ar-addition">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Ten-Frames: "Make a 10" Strategy</h3>
+              <p class="card-desc">When adding numbers, decompose the second number to complete a 10 in Frame 1, leaving the rest in Frame 2.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Number 1 (Red): <strong id="tf-a-val">8</strong></span></div>
+                <input type="range" id="tf-a" min="1" max="9" value="8">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Number 2 (Yellow): <strong id="tf-b-val">5</strong></span></div>
+                <input type="range" id="tf-b" min="1" max="9" value="5">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Thinking Process:</div>
+                <div class="formula-display" id="tf-calc-exp">8 + 5 = 8 + (2 + 3) = <span class="highlight-num">10 + 3 = 13</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Dual Ten-Frames</h3><span class="badge" id="tf-total-badge">Total: 13</span></div>
+              <div class="ten-frames-wrapper">
+                <div class="ten-frame-box"><div class="tf-title">Frame 1 (Full 10)</div><div class="ten-frame-grid" id="tf-f1"></div></div>
+                <div class="ten-frame-box"><div class="tf-title">Frame 2 (Remainder)</div><div class="ten-frame-grid" id="tf-f2"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab: Subtraction -->
+        <div class="subtab-pane" id="pane-ar-subtraction">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Column Subtraction with Borrowing</h3>
+              <p class="card-desc">Step through vertical subtraction. When ones are too small, borrow 1 Ten (10 Ones) from the Tens column.</p>
+              <div class="regroup-inputs" style="grid-template-columns: 1fr 1fr;">
+                <div class="input-pair"><label>Top Number:</label><input type="number" id="sub-in-1" value="72" min="11" max="99"></div>
+                <div class="input-pair"><label>Bottom Number:</label><input type="number" id="sub-in-2" value="38" min="10" max="98"></div>
+              </div>
+              <div class="stepper-buttons">
+                <button class="btn btn-secondary" id="sub-step-prev" disabled>Previous Step</button>
+                <button class="btn btn-primary" id="sub-step-next">Next Step &rarr;</button>
+                <button class="btn btn-outline" id="sub-step-reset">Reset</button>
+              </div>
+              <div class="step-narrative" id="sub-narrative">Click Next Step to begin!</div>
+            </div>
+            <div class="card visual-card">
+              <h3>Borrowing Visual Board</h3>
+              <div class="column-math-board" id="sub-math-board"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab: Multiplication & Division -->
+        <div class="subtab-pane" id="pane-ar-multiplication">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Array & Sharing Models</h3>
+              <p class="card-desc">See multiplication as arrays and division as equal fair sharing into groups.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Rows (Groups): <strong id="ar-mult-r-val">4</strong></span></div>
+                <input type="range" id="ar-mult-r" min="1" max="10" value="4">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Columns (Items per Group): <strong id="ar-mult-c-val">6</strong></span></div>
+                <input type="range" id="ar-mult-c" min="1" max="10" value="6">
+              </div>
+              <button class="btn btn-outline" id="btn-swap-array">Swap Dimensions (4&times;6 &harr; 6&times;4)</button>
+              <div class="dual-equations">
+                <div class="eq-card"><div class="eq-title">Multiplication:</div><div class="eq-val" id="ar-mult-eq">4 &times; 6 = 24</div></div>
+                <div class="eq-card"><div class="eq-title">Division:</div><div class="eq-val" id="ar-div-eq">24 &divide; 4 = 6</div></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Visual Array</h3><span class="badge" id="ar-dots-badge">24 Items</span></div>
+              <div class="array-container" id="ar-array-stage"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab: Negative Numbers & Integers -->
+        <div class="subtab-pane" id="pane-ar-negatives">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Negative Numbers & Temperature</h3>
+              <p class="card-desc">Negative numbers represent values below zero: debt, elevation below sea level, or freezing cold temperatures!</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Initial Value: <strong id="neg-start-val">-3</strong></span></div>
+                <input type="range" id="neg-start" min="-15" max="15" value="-3">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Operation:</span></div>
+                <select id="neg-op" style="padding:8px; border-radius:6px; width:100%; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary); font-weight:700;">
+                  <option value="add">Add (+ warmer / gain)</option>
+                  <option value="sub">Subtract (- colder / loss)</option>
+                  <option value="mult">Multiply (&times; signs rule)</option>
+                </select>
+              </div>
+              <div class="slider-group" style="margin-top:12px;">
+                <div class="slider-header"><span>Change Value: <strong id="neg-change-val">5</strong></span></div>
+                <input type="range" id="neg-change" min="-10" max="10" value="5">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Integer Rule & Equation:</div>
+                <div class="formula-display" id="neg-formula-text">-3 + 5 = <span class="highlight-num">+2</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Thermometer & Integer Line</h3></div>
+              <div class="integer-visual-wrapper">
+                <div class="thermometer-box">
+                  <div class="thermo-tube">
+                    <div class="thermo-mercury" id="thermo-fill"></div>
+                  </div>
+                  <span class="thermo-readout" id="thermo-label">2°C</span>
+                </div>
+                <div class="int-line-box">
+                  <svg id="int-line-svg" viewBox="0 0 450 140" width="100%" height="140"></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab: Rounding Roller -->
+        <div class="subtab-pane" id="pane-ar-rounding">
+          <div class="card">
+            <h3>Interactive Rounding Roller</h3>
+            <p class="card-desc">Enter any number to see how it rounds to the nearest 10, 100, 1000, or Tenth (0.1) using the "5 or more rounds up" rule.</p>
+            <div class="rounding-input-bar">
+              <label>Number to Round: <input type="number" id="round-num-in" value="347.68" step="0.01"></label>
+            </div>
+            <div class="rounding-results-grid">
+              <div class="round-card">
+                <span class="rc-label">Nearest 10</span>
+                <span class="rc-val" id="round-10">350</span>
+                <span class="rc-rule" id="round-10-rule">Last digit is 7 &ge; 5 &rarr; Round UP</span>
+              </div>
+              <div class="round-card">
+                <span class="rc-label">Nearest 100</span>
+                <span class="rc-val" id="round-100">300</span>
+                <span class="rc-rule" id="round-100-rule">Tens digit is 4 &lt; 5 &rarr; Round DOWN</span>
+              </div>
+              <div class="round-card">
+                <span class="rc-label">Nearest 1000</span>
+                <span class="rc-val" id="round-1000">0</span>
+                <span class="rc-rule" id="round-1000-rule">Hundreds is 3 &lt; 5 &rarr; Round DOWN</span>
+              </div>
+              <div class="round-card">
+                <span class="rc-label">Nearest Tenth (0.1)</span>
+                <span class="rc-val" id="round-tenth">347.7</span>
+                <span class="rc-rule" id="round-tenth-rule">Hundredths is 8 &ge; 5 &rarr; Round UP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab: Factors & Primes -->
+        <div class="subtab-pane" id="pane-ar-factors">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Factor Tree & Prime Factorization</h3>
+              <p class="card-desc">Every number is built from prime building blocks! Choose a number to break it down into prime factors.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Number: <strong id="factor-num-val">36</strong></span></div>
+                <input type="range" id="factor-slider" min="4" max="100" value="36">
+              </div>
+              <div class="quick-presets">
+                <span class="preset-label">Explore:</span>
+                <button class="preset-chip" onclick="app.setFactorNum(24)">24</button>
+                <button class="preset-chip" onclick="app.setFactorNum(48)">48</button>
+                <button class="preset-chip" onclick="app.setFactorNum(60)">60</button>
+                <button class="preset-chip" onclick="app.setFactorNum(97)">97 (Prime!)</button>
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Prime Factorization:</div>
+                <div class="formula-display" id="factor-prime-exp">36 = 2 &times; 2 &times; 3 &times; 3 = <span class="highlight-num">2² &times; 3²</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Factor Tree Diagram</h3><span class="badge" id="factor-prime-badge">Composite</span></div>
+              <div class="factor-tree-stage" id="factor-tree-canvas"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab: BODMAS Tree -->
+        <div class="subtab-pane" id="pane-ar-bodmas">
+          <div class="card">
+            <h3>BODMAS / PEMDAS Order of Operations Tree</h3>
+            <p class="card-desc"><strong>B</strong>rackets &rarr; <strong>O</strong>rders (powers/roots) &rarr; <strong>D</strong>ivision & <strong>M</strong>ultiplication &rarr; <strong>A</strong>ddition & <strong>S</strong>ubtraction.</p>
+            <div class="bodmas-builder">
+              <label>Equation Expression: 
+                <input type="text" id="bodmas-expr-in" value="3 + 4 * (8 - 2) / 3" style="padding:8px 12px; font-family:var(--font-mono); font-size:1.1rem; width:280px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary);">
+              </label>
+              <button class="btn btn-primary" id="btn-eval-bodmas">Step Through BODMAS</button>
+            </div>
+            <div class="bodmas-steps-container" id="bodmas-steps-output"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 2: POWERS, ROOTS & FACTORIALS
+           ======================================================== -->
+      <section class="topic-section" id="topic-powers">
+        <div class="section-intro">
+          <h2>Squares, Square Roots, Cubes & Factorials</h2>
+          <p>Explore 2D square grids, 3D cubic blocks, roots, and factorial cascades.</p>
+        </div>
+
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-subtab="pow-squares">Squares & Square Roots ($n^2$, $\sqrt{n}$)</button>
+          <button class="sub-tab-btn" data-subtab="pow-cubes">Cubes & Cube Roots ($n^3$, $\sqrt[3]{n}$)</button>
+          <button class="sub-tab-btn" data-subtab="pow-factorials">Factorials ($n!$)</button>
+        </div>
+
+        <!-- Squares -->
+        <div class="subtab-pane active" id="pane-pow-squares">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Square & Square Root Explorer</h3>
+              <p class="card-desc">A square number is the area of a square with side length $n$. The square root is finding the side length from the area!</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Side Length ($n$): <strong id="sq-n-val">5</strong></span></div>
+                <input type="range" id="sq-slider" min="1" max="10" value="5">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Relations:</div>
+                <div class="formula-display" id="sq-formula-text">5&sup2; = 5 &times; 5 = <span class="highlight-num">25</span> &bull; &radic;25 = <span class="highlight-num">5</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Visual Square Grid</h3><span class="badge" id="sq-total-badge">25 Tiles</span></div>
+              <div class="square-tiles-wrapper" id="square-tiles-stage"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cubes -->
+        <div class="subtab-pane" id="pane-pow-cubes">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>3D Cubes & Cube Roots</h3>
+              <p class="card-desc">A cube number represents the volume of a 3D cube: length &times; width &times; height ($n \times n \times n$).</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Cube Edge ($n$): <strong id="cube-n-val">3</strong></span></div>
+                <input type="range" id="cube-slider" min="1" max="6" value="3">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Cube & Cube Root:</div>
+                <div class="formula-display" id="cube-formula-text">3&sup3; = 3 &times; 3 &times; 3 = <span class="highlight-num">27</span> &bull; &sup3;&radic;27 = <span class="highlight-num">3</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Isometric 3D Cube Blocks</h3><span class="badge" id="cube-total-badge">27 Blocks</span></div>
+              <div class="cube-canvas-wrapper">
+                <canvas id="cube-3d-canvas" width="300" height="260"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Factorials -->
+        <div class="subtab-pane" id="pane-pow-factorials">
+          <div class="card">
+            <h3>Factorial ($n!$) Multiplier Cascade</h3>
+            <p class="card-desc">Factorials represent the number of ways to arrange $n$ items! $n! = n \times (n-1) \times (n-2) \times \dots \times 1$.</p>
+            <div class="slider-group" style="max-width:400px;">
+              <div class="slider-header"><span>Choose $n$: <strong id="fact-n-val">5</strong></span></div>
+              <input type="range" id="fact-slider" min="1" max="8" value="5">
+            </div>
+            <div class="factorial-cascade-view" id="fact-cascade-container"></div>
+            <div class="factorial-result-card">
+              <span class="fr-label">Result:</span>
+              <span class="fr-val" id="fact-result-val">5! = 120</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 3: FRACTIONS, DECIMALS, MONEY & TIME
+           ======================================================== -->
+      <section class="topic-section" id="topic-fractions-applied">
+        <div class="section-intro">
+          <h2>Fractions, Decimals, Money & Time</h2>
+          <p>Master proportions, place value, cash register money math, and reading analog/elapsed clock time.</p>
+        </div>
+
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-subtab="fd-fractions">Fractions Lab (Pies & Strips)</button>
+          <button class="sub-tab-btn" data-subtab="fd-decimals">Decimals 100-Grid</button>
+          <button class="sub-tab-btn" data-subtab="fd-money">Money & Cash Register</button>
+          <button class="sub-tab-btn" data-subtab="fd-time">Analog Clock & Elapsed Time</button>
+        </div>
+
+        <!-- Fractions -->
+        <div class="subtab-pane active" id="pane-fd-fractions">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Configure Fraction</h3>
+              <p class="card-desc">Numerator: selected parts. Denominator: total equal parts.</p>
+              <div class="fraction-display-large">
+                <div class="frac-vertical">
+                  <span class="f-num" id="f-num-show">3</span>
+                  <div class="f-bar"></div>
+                  <span class="f-den" id="f-den-show">4</span>
+                </div>
+                <div class="frac-equals">=</div>
+                <div class="frac-decimal-info">
+                  <div>Decimal: <strong id="f-dec-show">0.75</strong></div>
+                  <div>Percentage: <strong id="f-pct-show">75%</strong></div>
+                </div>
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Numerator: <strong id="f-num-val">3</strong></span></div>
+                <input type="range" id="f-num-slider" min="0" max="8" value="3">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Denominator: <strong id="f-den-val">4</strong></span></div>
+                <input type="range" id="f-den-slider" min="1" max="12" value="4">
+              </div>
+            </div>
+            <div class="card visual-card">
+              <h3>Pie & Strip Visuals</h3>
+              <div class="fraction-visuals-split">
+                <div class="frac-viz-box">
+                  <h4>Pie Chart</h4>
+                  <svg id="f-pie-svg" viewBox="0 0 200 200" width="160" height="160"></svg>
+                </div>
+                <div class="frac-viz-box">
+                  <h4>Strip Model</h4>
+                  <div class="fraction-strip-container" id="f-strip-wrap"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decimals -->
+        <div class="subtab-pane" id="pane-fd-decimals">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>100-Square Decimal Grid</h3>
+              <p class="card-desc">Whole = 1.00. Rows = 0.10. Single square = 0.01.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Hundredths: <strong id="dec-100-val">45</strong> / 100</span></div>
+                <input type="range" id="dec-100-slider" min="0" max="100" value="45">
+              </div>
+              <div class="grid-stats-cards">
+                <div class="stat-box"><span class="st-label">Decimal</span><span class="st-value" id="dec-val-txt">0.45</span></div>
+                <div class="stat-box"><span class="st-label">Fraction</span><span class="st-value" id="dec-frac-txt">45/100</span></div>
+                <div class="stat-box"><span class="st-label">Percentage</span><span class="st-value" id="dec-pct-txt">45%</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="hundred-grid-wrapper">
+                <div class="hundred-grid" id="dec-hundred-board"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Money -->
+        <div class="subtab-pane" id="pane-fd-money">
+          <div class="card">
+            <h3>Coins, Bills & Cash Register</h3>
+            <p class="card-desc">Calculate total money and make change! 100 cents = $1.00.</p>
+            <div class="coin-bench-grid">
+              <div class="coin-counter-col">
+                <div class="coin-item">
+                  <div class="coin-visual quarter">25&cent;</div>
+                  <div class="coin-info">
+                    <strong>Quarter ($0.25)</strong>
+                    <div class="coin-qty-ctrl">
+                      <button onclick="app.updateCoins('quarter', -1)">-</button>
+                      <span id="qty-quarter">2</span>
+                      <button onclick="app.updateCoins('quarter', 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="coin-item">
+                  <div class="coin-visual dime">10&cent;</div>
+                  <div class="coin-info">
+                    <strong>Dime ($0.10)</strong>
+                    <div class="coin-qty-ctrl">
+                      <button onclick="app.updateCoins('dime', -1)">-</button>
+                      <span id="qty-dime">3</span>
+                      <button onclick="app.updateCoins('dime', 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="coin-item">
+                  <div class="coin-visual nickel">5&cent;</div>
+                  <div class="coin-info">
+                    <strong>Nickel ($0.05)</strong>
+                    <div class="coin-qty-ctrl">
+                      <button onclick="app.updateCoins('nickel', -1)">-</button>
+                      <span id="qty-nickel">1</span>
+                      <button onclick="app.updateCoins('nickel', 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="coin-item">
+                  <div class="coin-visual penny">1&cent;</div>
+                  <div class="coin-info">
+                    <strong>Penny ($0.01)</strong>
+                    <div class="coin-qty-ctrl">
+                      <button onclick="app.updateCoins('penny', -1)">-</button>
+                      <span id="qty-penny">4</span>
+                      <button onclick="app.updateCoins('penny', 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="coin-summary-card">
+                <h4>Total Register Amount</h4>
+                <div class="money-big-display" id="total-money-val">$0.89</div>
+                <div class="money-breakdown" id="money-breakdown-val"></div>
+                <div class="money-fraction-tag" id="money-fraction-txt"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time & Clock -->
+        <div class="subtab-pane" id="pane-fd-time">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Analog Clock & Time Calculator</h3>
+              <p class="card-desc">Adjust the hours and minutes sliders to watch the clock hands rotate in real-time!</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Hour: <strong id="clock-hr-val">3</strong></span></div>
+                <input type="range" id="clock-hr-slider" min="1" max="12" value="3">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Minute: <strong id="clock-min-val">45</strong></span></div>
+                <input type="range" id="clock-min-slider" min="0" max="59" value="45">
+              </div>
+              <div class="digital-clock-display" id="clock-digital-box">03:45 PM</div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Angle & Elapsed:</div>
+                <div class="formula-display" id="clock-angle-text">Angle between hands: <span class="highlight-num">157.5°</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Analog Clock Face</h3></div>
+              <div class="clock-stage-wrap">
+                <svg id="analog-clock-svg" viewBox="0 0 240 240" width="220" height="220"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 4: ALGEBRA & IDENTITIES
+           ======================================================== -->
+      <section class="topic-section" id="topic-algebra-identities">
+        <div class="section-intro">
+          <h2>Algebra & Algebraic Identities</h2>
+          <p>Solve equations using the visual balance scale and explore geometric area proofs of famous identities.</p>
+        </div>
+
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-subtab="alg-scale">Balance Scale ($ax + b = c$)</button>
+          <button class="sub-tab-btn" data-subtab="alg-identities">Identities Proof ($(a+b)^2$, $a^2-b^2$)</button>
+        </div>
+
+        <!-- Balance Scale -->
+        <div class="subtab-pane active" id="pane-alg-scale">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Algebraic Balance Scale</h3>
+              <p class="card-desc">An equation is a balance scale! Whatever you add, subtract, multiply, or divide on one side must be done to the other.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Coefficient $a$ (Number of $x$ boxes): <strong id="scale-a-val">2</strong></span></div>
+                <input type="range" id="scale-a" min="1" max="5" value="2">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Constant $b$: <strong id="scale-b-val">3</strong></span></div>
+                <input type="range" id="scale-b" min="0" max="10" value="3">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Target Sum $c$: <strong id="scale-c-val">11</strong></span></div>
+                <input type="range" id="scale-c" min="5" max="25" value="11">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Step-by-Step Solution:</div>
+                <div class="formula-display" id="scale-steps-text">2x + 3 = 11 &rarr; 2x = 8 &rarr; <span class="highlight-num">x = 4</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Balance Visualizer</h3><span class="badge" id="scale-solved-badge">Balanced!</span></div>
+              <div class="balance-scale-stage" id="balance-scale-svg-box">
+                <svg id="scale-svg" viewBox="0 0 360 220" width="100%" height="200"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Algebraic Identities -->
+        <div class="subtab-pane" id="pane-alg-identities">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Geometric Area Proof of Identities</h3>
+              <p class="card-desc">Why is $(a + b)^2 \neq a^2 + b^2$? Because the middle rectangles ($2ab$) complete the square!</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Select Identity:</span></div>
+                <select id="identity-select" style="padding:8px; border-radius:6px; width:100%; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary); font-weight:700;">
+                  <option value="plus">1. (a + b)² = a² + 2ab + b²</option>
+                  <option value="diff">2. a² - b² = (a - b)(a + b)</option>
+                  <option value="minus">3. (a - b)² = a² - 2ab + b²</option>
+                </select>
+              </div>
+              <div class="slider-group" style="margin-top:14px;">
+                <div class="slider-header"><span>Value of $a$: <strong id="id-a-val">6</strong></span></div>
+                <input type="range" id="id-a-slider" min="3" max="10" value="6">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Value of $b$: <strong id="id-b-val">3</strong></span></div>
+                <input type="range" id="id-b-slider" min="1" max="5" value="3">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Calculated Breakdown:</div>
+                <div class="formula-display" id="id-breakdown-text">(6 + 3)² = 9² = 81 &bull; 36 + 36 + 9 = <span class="highlight-num">81</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Geometric Proof Diagram</h3></div>
+              <div class="identity-proof-stage" id="identity-canvas-stage"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 5: GEOMETRY, ANGLES & 3D VECTORS
+           ======================================================== -->
+      <section class="topic-section" id="topic-geometry-3d">
+        <div class="section-intro">
+          <h2>Geometry, Angles & 3D Vectors</h2>
+          <p>Explore 2D shapes (area & perimeter), interactive protractor angle measuring, and 3D vector coordinates $(x, y, z)$.</p>
+        </div>
+
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-subtab="geo-shapes">2D Shapes & Formulas</button>
+          <button class="sub-tab-btn" data-subtab="geo-angles">Angles & Protractor</button>
+          <button class="sub-tab-btn" data-subtab="geo-3dvectors">3D Vector Space $(x,y,z)$</button>
+        </div>
+
+        <!-- 2D Shapes -->
+        <div class="subtab-pane active" id="pane-geo-shapes">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>2D Shape Inspector</h3>
+              <p class="card-desc">Select any geometric shape to inspect dimensions, perimeter, and area formula.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Shape Type:</span></div>
+                <select id="shape-select" style="padding:8px; border-radius:6px; width:100%; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary); font-weight:700;">
+                  <option value="rect">Rectangle / Square</option>
+                  <option value="triangle">Right Triangle</option>
+                  <option value="circle">Circle</option>
+                  <option value="trapezoid">Trapezoid</option>
+                </select>
+              </div>
+              <div class="slider-group" style="margin-top:14px;">
+                <div class="slider-header"><span id="shape-dim1-label">Width ($w$): <strong id="shape-dim1-val">8</strong></span></div>
+                <input type="range" id="shape-dim1" min="2" max="15" value="8">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span id="shape-dim2-label">Height ($h$): <strong id="shape-dim2-val">5</strong></span></div>
+                <input type="range" id="shape-dim2" min="2" max="15" value="5">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Formulas & Values:</div>
+                <div class="formula-display" id="shape-formula-text">Area = 8 &times; 5 = <span class="highlight-num">40</span> &bull; Perimeter = 2(8+5) = <span class="highlight-num">26</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Geometric Rendering</h3></div>
+              <div class="shape-canvas-wrap">
+                <svg id="shape-svg" viewBox="0 0 300 220" width="100%" height="200"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Angles & Protractor -->
+        <div class="subtab-pane" id="pane-geo-angles">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>Interactive Protractor & Angles</h3>
+              <p class="card-desc">Drag the angle slider or click presets to classify angles: Acute ($< 90^\circ$), Right ($90^\circ$), Obtuse ($> 90^\circ$), Straight ($180^\circ$), Reflex ($> 180^\circ$).</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>Angle Degrees: <strong id="angle-deg-val">65°</strong></span></div>
+                <input type="range" id="angle-slider" min="0" max="360" value="65">
+              </div>
+              <div class="quick-presets">
+                <button class="preset-chip" onclick="app.setAngle(45)">45° (Acute)</button>
+                <button class="preset-chip" onclick="app.setAngle(90)">90° (Right)</button>
+                <button class="preset-chip" onclick="app.setAngle(135)">135° (Obtuse)</button>
+                <button class="preset-chip" onclick="app.setAngle(180)">180° (Straight)</button>
+                <button class="preset-chip" onclick="app.setAngle(270)">270° (Reflex)</button>
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Angle Type & Radian:</div>
+                <div class="formula-display" id="angle-info-text">Type: <span class="highlight-num">Acute Angle</span> &bull; Radians: 1.13 rad</div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>Protractor Tool</h3></div>
+              <div class="protractor-stage-wrap">
+                <svg id="protractor-svg" viewBox="0 0 320 220" width="100%" height="210"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Vectors -->
+        <div class="subtab-pane" id="pane-geo-3dvectors">
+          <div class="grid-2col">
+            <div class="card control-card">
+              <h3>3D Vector Space: $(x, y, z)$</h3>
+              <p class="card-desc">A 3D vector points from the origin $(0, 0, 0)$ to a point in 3-dimensional space. Magnitude $= \sqrt{x^2 + y^2 + z^2}$.</p>
+              <div class="slider-group">
+                <div class="slider-header"><span>X coordinate: <strong id="vec-x-val">4</strong></span></div>
+                <input type="range" id="vec-x" min="-8" max="8" value="4">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Y coordinate: <strong id="vec-y-val">5</strong></span></div>
+                <input type="range" id="vec-y" min="-8" max="8" value="5">
+              </div>
+              <div class="slider-group">
+                <div class="slider-header"><span>Z coordinate: <strong id="vec-z-val">3</strong></span></div>
+                <input type="range" id="vec-z" min="-8" max="8" value="3">
+              </div>
+              <div class="expanded-formula-card">
+                <div class="formula-label">Vector Magnitude ($|\vec{v}|$):</div>
+                <div class="formula-display" id="vec-mag-text">|v| = &radic;(4&sup2; + 5&sup2; + 3&sup2;) = &radic;50 &approx; <span class="highlight-num">7.07</span></div>
+              </div>
+            </div>
+            <div class="card visual-card">
+              <div class="visual-header"><h3>3D Coordinate Projection</h3><span class="badge" id="vec-badge">v = (4, 5, 3)</span></div>
+              <div class="vector-3d-stage">
+                <canvas id="vector-3d-canvas" width="340" height="260"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 6: MATH HACKS & SHORTCUTS VAULT
+           ======================================================== -->
+      <section class="topic-section" id="topic-hacks">
+        <div class="section-intro">
+          <h2>🧠 Math Hacks & Easy Mental Tricks</h2>
+          <p>Learn real mental math superpowers! Fast shortcuts for 11s, squaring numbers ending in 5, the 9s finger trick, and the fraction butterfly method.</p>
+        </div>
+
+        <div class="hacks-grid">
+          <!-- Hack 1: Multiply by 11 -->
+          <div class="card hack-card">
+            <div class="hack-badge">Trick #1</div>
+            <h3>Multiply Any 2-Digit Number by 11</h3>
+            <p class="hack-desc">Spread the digits apart, add them, and sandwich the sum in the middle!</p>
+            <div class="hack-interactive-box">
+              <label>Choose 2-digit number: <input type="number" id="hack-11-in" value="35" min="10" max="99" style="width:70px; padding:6px; font-weight:700; font-family:var(--font-mono);"></label>
+              <div class="hack-demo-output" id="hack-11-out">
+                35 &times; 11 &rarr; 3 _ 5 &rarr; 3 + 5 = 8 &rarr; <strong>385</strong>!
+              </div>
+            </div>
+          </div>
+
+          <!-- Hack 2: Squaring Ending in 5 -->
+          <div class="card hack-card">
+            <div class="hack-badge">Trick #2</div>
+            <h3>Squaring Numbers Ending in 5</h3>
+            <p class="hack-desc">Multiply the first digit by (digit + 1), then tack <strong>25</strong> onto the end!</p>
+            <div class="hack-interactive-box">
+              <label>Choose number (ends in 5): 
+                <select id="hack-5-select" style="padding:6px; font-weight:700; font-family:var(--font-mono);">
+                  <option value="25">25</option>
+                  <option value="35" selected>35</option>
+                  <option value="45">45</option>
+                  <option value="65">65</option>
+                  <option value="85">85</option>
+                  <option value="95">95</option>
+                </select>
+              </label>
+              <div class="hack-demo-output" id="hack-5-out">
+                35&sup2; &rarr; 3 &times; (3 + 1) = 3 &times; 4 = 12 &rarr; Attach 25 &rarr; <strong>1225</strong>!
+              </div>
+            </div>
+          </div>
+
+          <!-- Hack 3: 9s Times Table Finger Trick -->
+          <div class="card hack-card">
+            <div class="hack-badge">Trick #3</div>
+            <h3>The 9s Times Table Finger Trick</h3>
+            <p class="hack-desc">Put 10 fingers up. Fold down the finger you are multiplying by: fingers to the left are Tens, fingers to the right are Ones!</p>
+            <div class="hack-interactive-box">
+              <label>9 &times; 
+                <select id="hack-9-select" style="padding:6px; font-weight:700; font-family:var(--font-mono);">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4" selected>4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+              </label>
+              <div class="hack-demo-output" id="hack-9-out">
+                Fold 4th finger down &rarr; 3 fingers on left (Tens), 6 on right (Ones) = <strong>36</strong>!
+              </div>
+            </div>
+          </div>
+
+          <!-- Hack 4: Butterfly Fractions -->
+          <div class="card hack-card">
+            <div class="hack-badge">Trick #4</div>
+            <h3>The Fraction Butterfly Method</h3>
+            <p class="hack-desc">Cross-multiply diagonal wings to add or subtract fractions without finding common denominators!</p>
+            <div class="hack-interactive-box">
+              <div class="butterfly-calc" id="hack-bf-out">
+                2/3 + 1/4 &rarr; Wings: (2&times;4) + (3&times;1) = 8 + 3 = 11. Bottom: 3&times;4 = 12 &rarr; <strong>11/12</strong>!
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 7: MATH GAMES & SPEED BLITZ
+           ======================================================== -->
+      <section class="topic-section" id="topic-games">
+        <div class="section-intro">
+          <h2>🎮 Math Games & Challenges</h2>
+          <p>Play games, earn coins, maintain your streak, and sharpen mental agility!</p>
+        </div>
+
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-subtab="game-blitz">⚡ 60s Fluency Blitz</button>
+          <button class="sub-tab-btn" data-subtab="game-target24">🎯 Target 24 Puzzle</button>
+        </div>
+
+        <!-- 60s Blitz -->
+        <div class="subtab-pane active" id="pane-game-blitz">
+          <div class="blitz-wrapper">
+            <div class="card blitz-lobby-card" id="blitz-lobby">
+              <h3>Choose Blitz Operation</h3>
+              <div class="blitz-modes">
+                <button class="blitz-mode-btn active" data-op="add">➕ Addition Blitz</button>
+                <button class="blitz-mode-btn" data-op="sub">➖ Subtraction Blitz</button>
+                <button class="blitz-mode-btn" data-op="mult">✖️ Multiplication Blitz</button>
+                <button class="blitz-mode-btn" data-op="mixed">🌟 Mixed Blitz (+, -, &times;)</button>
+              </div>
+              <div class="blitz-record-box"><span>Personal Best:</span><strong id="blitz-high-score">0 pts</strong></div>
+              <button class="btn btn-primary btn-large" id="btn-start-blitz" style="margin-top:20px; font-size:1.15rem; width:100%; justify-content:center;">
+                🚀 Start 60-Second Challenge!
+              </button>
+            </div>
+
+            <div class="card blitz-game-card hidden" id="blitz-game">
+              <div class="blitz-topbar">
+                <div class="blitz-timer"><span>⏱️ Time:</span><strong id="blitz-time-left">60s</strong></div>
+                <div class="blitz-score"><span>Score:</span><strong id="blitz-current-score">0</strong></div>
+                <div class="blitz-combo"><span>Combo:</span><strong id="blitz-combo-val">x1</strong></div>
+              </div>
+              <div class="blitz-question-prompt" id="blitz-prompt">7 &times; 8 = ?</div>
+              <div class="blitz-options" id="blitz-options-grid"></div>
+            </div>
+
+            <div class="card blitz-gameover-card hidden" id="blitz-gameover">
+              <div class="gameover-trophy">🏆</div>
+              <h3 id="blitz-gameover-title">Time's Up! Amazing Effort!</h3>
+              <div class="gameover-score" id="blitz-final-score">240 Points</div>
+              <div class="gameover-stats" id="blitz-final-stats"></div>
+              <button class="btn btn-primary" id="btn-replay-blitz" style="margin-top:20px;">Play Again &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Target 24 -->
+        <div class="subtab-pane" id="pane-game-target24">
+          <div class="card" style="max-width:650px; margin:0 auto; text-align:center;">
+            <h3>Target 24 Puzzle</h3>
+            <p class="card-desc">Can you combine these 4 numbers using $+$, $-$, $\times$, $\div$ to equal exactly <strong>24</strong>?</p>
+            <div class="t24-cards-row" id="t24-cards-box">
+              <div class="t24-card">4</div>
+              <div class="t24-card">6</div>
+              <div class="t24-card">8</div>
+              <div class="t24-card">2</div>
+            </div>
+            <div class="t24-solution-box" id="t24-sol-box" style="margin:20px 0;">
+              <button class="btn btn-outline" id="btn-reveal-24">💡 Show One Solution</button>
+              <button class="btn btn-secondary" id="btn-new-24" style="margin-left:10px;">🎲 New Puzzle</button>
+              <div id="t24-sol-text" style="margin-top:14px; font-family:var(--font-mono); font-weight:800; font-size:1.2rem; color:var(--primary);"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CATEGORY 8: PRACTICE ARENA & WORD PROBLEMS
+           ======================================================== -->
+      <section class="topic-section" id="topic-practice">
+        <div class="section-intro">
+          <h2>Interactive Practice & Story Word Problems</h2>
+          <p>Solve dynamic procedural problems across all topics. Earn Coins and XP with every correct answer!</p>
+        </div>
+
+        <div class="practice-container">
+          <div class="practice-sidebar">
+            <div class="card">
+              <h3>Filter Category</h3>
+              <div class="quiz-cat-list">
+                <button class="quiz-cat-btn active" data-cat="all">🌟 All Categories</button>
+                <button class="quiz-cat-btn" data-cat="addition">➕ Addition & Subtraction</button>
+                <button class="quiz-cat-btn" data-cat="multiplication">✖️ Multiplication & Division</button>
+                <button class="quiz-cat-btn" data-cat="powers">⚡ Squares, Roots & Factorials</button>
+                <button class="quiz-cat-btn" data-cat="fractions">🍰 Fractions & Decimals</button>
+                <button class="quiz-cat-btn" data-cat="algebra">📐 Algebra & Geometry</button>
+                <button class="quiz-cat-btn" data-cat="word-problems">📖 Story Word Problems</button>
+              </div>
+              <div class="practice-stats-box">
+                <div class="p-stat"><span>Solved:</span><strong id="practice-solved-count">0</strong></div>
+                <div class="p-stat"><span>Accuracy:</span><strong id="practice-accuracy">100%</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="practice-main">
+            <div class="card quiz-card" id="quiz-card">
+              <div class="quiz-header">
+                <span class="quiz-tag" id="quiz-topic-tag">Addition</span>
+                <span class="quiz-difficulty" id="quiz-level-tag">Level 1</span>
+              </div>
+              <div class="question-body">
+                <h3 class="question-prompt" id="quiz-prompt">What is 28 + 35?</h3>
+                <div class="question-visual" id="quiz-visual-box"></div>
+              </div>
+              <div class="options-grid" id="quiz-options-container"></div>
+              <div class="quiz-feedback hidden" id="quiz-feedback">
+                <div class="feedback-message" id="feedback-msg">Correct!</div>
+                <div class="feedback-explanation" id="feedback-exp"></div>
+              </div>
+              <div class="quiz-actions">
+                <button class="btn btn-outline" id="btn-quiz-hint">💡 Need a Hint?</button>
+                <button class="btn btn-primary hidden" id="btn-quiz-next">Next Challenge &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Rewards Shop Modal -->
+    <div class="modal-backdrop hidden" id="shop-modal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>🎁 MathCraft Rewards Shop</h3>
+          <button class="icon-btn" id="btn-close-shop">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="shop-balance-bar">
+            <span>Your Coins:</span>
+            <strong id="shop-coins-display">🪙 50 Coins</strong>
+          </div>
+          <div class="shop-items-grid" id="shop-items-container">
+            <!-- Dynamic Shop Items -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges Modal -->
+    <div class="modal-backdrop hidden" id="badge-modal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>🏆 Your Mastery Badges</h3>
+          <button class="icon-btn" id="btn-close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="badges-grid" id="badges-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language Selector Modal -->
+    <div class="modal-backdrop hidden" id="language-modal">
+      <div class="modal-dialog language-modal-dialog">
+        <div class="modal-header">
+          <h3 data-i18n="lang_modal_title">🌐 Select Language / भाषा / Idioma</h3>
+          <button class="icon-btn" id="btn-close-lang">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-subtext" data-i18n="lang_modal_sub">Choose your preferred language. All lessons, hacks, hints, and quiz questions will automatically adapt!</p>
+          <div class="language-grid" id="language-options-grid">
+            <button class="lang-card active" data-lang="en">
+              <span class="lang-flag">🇬🇧</span>
+              <div class="lang-details">
+                <span class="lang-name">English</span>
+                <span class="lang-native">English</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="es">
+              <span class="lang-flag">🇪🇸</span>
+              <div class="lang-details">
+                <span class="lang-name">Spanish</span>
+                <span class="lang-native">Español</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="hi">
+              <span class="lang-flag">🇮🇳</span>
+              <div class="lang-details">
+                <span class="lang-name">Hindi</span>
+                <span class="lang-native">हिन्दी</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="fr">
+              <span class="lang-flag">🇫🇷</span>
+              <div class="lang-details">
+                <span class="lang-name">French</span>
+                <span class="lang-native">Français</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="de">
+              <span class="lang-flag">🇩🇪</span>
+              <div class="lang-details">
+                <span class="lang-name">German</span>
+                <span class="lang-native">Deutsch</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="zh">
+              <span class="lang-flag">🇨🇳</span>
+              <div class="lang-details">
+                <span class="lang-name">Chinese</span>
+                <span class="lang-native">中文</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="ar">
+              <span class="lang-flag">🇸🇦</span>
+              <div class="lang-details">
+                <span class="lang-name">Arabic</span>
+                <span class="lang-native">العربية</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="ja">
+              <span class="lang-flag">🇯🇵</span>
+              <div class="lang-details">
+                <span class="lang-name">Japanese</span>
+                <span class="lang-native">日本語</span>
+              </div>
+            </button>
+            <button class="lang-card" data-lang="pt">
+              <span class="lang-flag">🇧🇷</span>
+              <div class="lang-details">
+                <span class="lang-name">Portuguese</span>
+                <span class="lang-native">Português</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-Step Guided Lesson Quest Modal -->
+    <div class="modal-backdrop hidden" id="quest-modal">
+      <div class="modal-dialog quest-modal-dialog">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <div class="quest-header-info">
+            <span class="quest-topic-tag" id="qm-topic-tag">➕ Addition</span>
+            <span class="quest-step-indicator" id="qm-step-indicator">Step 1: Explanations & Hacks</span>
+          </div>
+          <button class="icon-btn" id="btn-close-quest">&times;</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body quest-modal-body">
+          
+          <!-- Phase 1: Explanations & Hacks Showcase -->
+          <div class="quest-phase active" id="quest-phase-1">
+            <div class="quest-explain-card">
+              <div class="quest-icon-banner" id="qm-icon-banner">➕</div>
+              <h2 class="quest-title" id="qm-title">Addition: The "Make a 10" Strategy</h2>
+              <p class="quest-concept-desc" id="qm-desc">
+                Instead of counting one by one, humans find 10s easy! Break down numbers so you can turn one into 10 first.
+              </p>
+
+              <!-- Dynamic Visual Demonstration Stage -->
+              <div class="quest-visual-demo" id="qm-visual-demo"></div>
+
+              <!-- Secret Hack Highlight Box -->
+              <div class="quest-hack-card">
+                <div class="hack-badge">⚡ SECRET HACK & SHORTCUT</div>
+                <h4 id="qm-hack-title">The "Bridge to 10" Trick</h4>
+                <div id="qm-hack-content" class="hack-content"></div>
+              </div>
+
+              <!-- Action Bar: Understood Button -->
+              <div class="quest-action-bar">
+                <button class="btn btn-understood" id="btn-quest-understood">
+                  <span class="btn-icon">👍</span>
+                  <span data-i18n="understood_btn">Understood! Take 10-Question Challenge</span>
+                  <span class="btn-arrow">&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2: 10 Questions Challenge -->
+          <div class="quest-phase hidden" id="quest-phase-2">
+            <div class="quest-quiz-container">
+              <!-- Quiz Top Bar: Progress & Score -->
+              <div class="quest-quiz-header">
+                <div class="quest-progress-wrap">
+                  <div class="quest-progress-label">
+                    <span id="qm-q-number">Question 1 of 10</span>
+                    <span id="qm-current-score">Score: 0 / 10</span>
+                  </div>
+                  <div class="quest-progress-bar">
+                    <div class="quest-progress-fill" id="qm-progress-fill" style="width: 10%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Question Display -->
+              <div class="quest-question-card">
+                <h3 class="quest-question-text" id="qm-question-text">What is 8 + 6?</h3>
+                <div class="quest-question-visual" id="qm-question-visual"></div>
+                
+                <!-- Support Tools: Hint & Hack -->
+                <div class="quest-support-tools">
+                  <button class="btn btn-support btn-hint" id="btn-quest-hint">
+                    <span class="support-icon">💡</span>
+                    <span data-i18n="hint_btn">Need a Hint?</span>
+                  </button>
+                  <button class="btn btn-support btn-hack" id="btn-quest-hack">
+                    <span class="support-icon">⚡</span>
+                    <span data-i18n="hack_btn">Use the Hack</span>
+                  </button>
+                </div>
+
+                <!-- Hint & Hack Expandable Drawers -->
+                <div class="quest-drawer hidden" id="qm-hint-box">
+                  <div class="drawer-inner hint-inner">
+                    <strong data-i18n="hint_title">💡 Helpful Hint:</strong>
+                    <span id="qm-hint-text">Think: How much does 8 need to reach 10?</span>
+                  </div>
+                </div>
+                <div class="quest-drawer hidden" id="qm-hack-box">
+                  <div class="drawer-inner hack-inner">
+                    <strong data-i18n="hack_title">⚡ Secret Hack Reminder:</strong>
+                    <span id="qm-hack-reminder">8 + 6 = 8 + (2 + 4) = 10 + 4 = 14!</span>
+                  </div>
+                </div>
+
+                <!-- 4 Options Grid -->
+                <div class="quest-options-grid" id="qm-options-container"></div>
+
+                <!-- Feedback Alert Box -->
+                <div class="quest-feedback hidden" id="qm-feedback-box">
+                  <div class="feedback-title" id="qm-feedback-title">Correct! 🎉</div>
+                  <div class="feedback-detail" id="qm-feedback-detail">Great job! 8 + 6 = 14.</div>
+                </div>
+
+                <!-- Action Controls: Submit & Next -->
+                <div class="quest-quiz-footer">
+                  <button class="btn btn-primary btn-submit" id="btn-quest-submit" disabled>
+                    <span data-i18n="submit_btn">Check & Submit Answer</span>
+                  </button>
+                  <button class="btn btn-next hidden" id="btn-quest-next">
+                    <span data-i18n="next_btn">Next Question &rarr;</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3: Quest Complete & Rewards -->
+          <div class="quest-phase hidden" id="quest-phase-3">
+            <div class="quest-complete-card">
+              <div class="complete-trophy">🏆</div>
+              <h2 class="complete-title" id="qm-complete-title" data-i18n="quest_complete_title">10-Question Quest Complete!</h2>
+              <div class="complete-score" id="qm-complete-score">You scored 10 / 10</div>
+              <p class="complete-message" id="qm-complete-msg" data-i18n="quest_complete_msg">
+                Incredible mastery! You applied the hacks and crushed all 10 challenges like a true math wizard!
+              </p>
+              
+              <div class="complete-rewards-pill">
+                <span class="reward-item">🪙 <strong id="qm-coins-earned">+100</strong> Coins</span>
+                <span class="reward-item">✨ <strong id="qm-xp-earned">+50</strong> XP</span>
+              </div>
+
+              <div class="complete-actions">
+                <button class="btn btn-secondary" id="btn-quest-retry">🔁 Practice This Topic Again</button>
+                <button class="btn btn-primary" id="btn-quest-new-topic">📚 Learn Another Topic</button>
+                <button class="btn btn-outline" id="btn-quest-open-shop">🎁 Visit Rewards Shop</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Canvas for Confetti -->
+    <canvas id="confetti-canvas"></canvas>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
