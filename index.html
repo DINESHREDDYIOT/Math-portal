@@ -7,10 +7,24 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="theme-light">
   <div class="app-layout">
+    <!-- Playful Floating Background Stickers -->
+    <div class="kid-floating-bg" aria-hidden="true">
+      <span class="kid-float-item f-item-1">⭐</span>
+      <span class="kid-float-item f-item-2">🎈</span>
+      <span class="kid-float-item f-item-3">➕</span>
+      <span class="kid-float-item f-item-4">🚀</span>
+      <span class="kid-float-item f-item-5">🍰</span>
+      <span class="kid-float-item f-item-6">✨</span>
+      <span class="kid-float-item f-item-7">💎</span>
+      <span class="kid-float-item f-item-8">🍕</span>
+      <span class="kid-float-item f-item-9">✖️</span>
+      <span class="kid-float-item f-item-10">🎯</span>
+    </div>
+
     <!-- Top Header -->
     <header class="app-header">
       <div class="brand">
@@ -25,7 +39,7 @@
         </div>
         <div class="brand-text">
           <h1>MathCraft</h1>
-          <span class="brand-tagline">Comprehensive Visual Math & Hacks Academy</span>
+          <span class="brand-tagline">✨ Fun Visual Math Playground! 🎈</span>
         </div>
       </div>
 
@@ -82,13 +96,11 @@
         <div class="quest-hero-text">
           <div class="quest-pill-tag">
             <span class="pulse-dot"></span>
-            <span data-i18n="quest_badge">🚀 3-Step Guided Learning Method</span>
+            <span data-i18n="quest_badge">🚀 Fun 3-Step Math Quest</span>
           </div>
-          <h2 data-i18n="quest_hero_title">Learn Any Math Topic With Visuals & Secret Hacks</h2>
+          <h2 data-i18n="quest_hero_title">Play Math Quests & Win Coins! 🪙</h2>
           <p class="quest-hero-desc" data-i18n="quest_hero_desc">
-            1️⃣ Click <strong>Start</strong> for simple explanations & shortcuts &bull;
-            2️⃣ Click <strong>Understood</strong> when ready &bull;
-            3️⃣ Solve <strong>10 Questions</strong> with Hints & Hacks, then click <strong>Submit</strong> to earn coins!
+            1️⃣ See the trick! 💡 &bull; 2️⃣ Try 10 fun puzzles! 🎯 &bull; 3️⃣ Win coins & badges! 🏆
           </p>
         </div>
         <div class="quest-hero-controls">
@@ -131,8 +143,8 @@
            ======================================================== -->
       <section class="topic-section active" id="topic-arithmetic">
         <div class="section-intro">
-          <h2>Core Arithmetic, Negatives & BODMAS</h2>
-          <p>Explore operations visually with ten-frames, column regrouping, integers thermometer, rounding roller, factor trees, and BODMAS order of operations.</p>
+          <h2>➕ Core Arithmetic & Numbers</h2>
+          <p>⭐ Play with ten-frames, column borrowing, thermometer & factor trees!</p>
         </div>
 
         <div class="sub-tabs">
@@ -150,7 +162,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Ten-Frames: "Make a 10" Strategy</h3>
-              <p class="card-desc">When adding numbers, decompose the second number to complete a 10 in Frame 1, leaving the rest in Frame 2.</p>
+              <p class="card-desc">⭐ Fill Frame 1 to make 10, then count what's left in Frame 2!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Number 1 (Red): <strong id="tf-a-val">8</strong></span></div>
                 <input type="range" id="tf-a" min="1" max="9" value="8">
@@ -179,7 +191,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Column Subtraction with Borrowing</h3>
-              <p class="card-desc">Step through vertical subtraction. When ones are too small, borrow 1 Ten (10 Ones) from the Tens column.</p>
+              <p class="card-desc">🎒 Borrow 1 Ten whenever the bottom number is bigger!</p>
               <div class="regroup-inputs" style="grid-template-columns: 1fr 1fr;">
                 <div class="input-pair"><label>Top Number:</label><input type="number" id="sub-in-1" value="72" min="11" max="99"></div>
                 <div class="input-pair"><label>Bottom Number:</label><input type="number" id="sub-in-2" value="38" min="10" max="98"></div>
@@ -203,7 +215,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Array & Sharing Models</h3>
-              <p class="card-desc">See multiplication as arrays and division as equal fair sharing into groups.</p>
+              <p class="card-desc">🍬 Count rows and columns, or share treats equally!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Rows (Groups): <strong id="ar-mult-r-val">4</strong></span></div>
                 <input type="range" id="ar-mult-r" min="1" max="10" value="4">
@@ -230,7 +242,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Negative Numbers & Temperature</h3>
-              <p class="card-desc">Negative numbers represent values below zero: debt, elevation below sea level, or freezing cold temperatures!</p>
+              <p class="card-desc">❄️ Brrr! Watch the thermometer drop below zero!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Initial Value: <strong id="neg-start-val">-3</strong></span></div>
                 <input type="range" id="neg-start" min="-15" max="15" value="-3">
@@ -273,7 +285,7 @@
         <div class="subtab-pane" id="pane-ar-rounding">
           <div class="card">
             <h3>Interactive Rounding Roller</h3>
-            <p class="card-desc">Enter any number to see how it rounds to the nearest 10, 100, 1000, or Tenth (0.1) using the "5 or more rounds up" rule.</p>
+            <p class="card-desc">🎯 5 or more rounds UP to the next number!</p>
             <div class="rounding-input-bar">
               <label>Number to Round: <input type="number" id="round-num-in" value="347.68" step="0.01"></label>
             </div>
@@ -307,7 +319,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Factor Tree & Prime Factorization</h3>
-              <p class="card-desc">Every number is built from prime building blocks! Choose a number to break it down into prime factors.</p>
+              <p class="card-desc">🌲 Split any number into its secret prime building blocks!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Number: <strong id="factor-num-val">36</strong></span></div>
                 <input type="range" id="factor-slider" min="4" max="100" value="36">
@@ -335,7 +347,7 @@
         <div class="subtab-pane" id="pane-ar-bodmas">
           <div class="card">
             <h3>BODMAS / PEMDAS Order of Operations Tree</h3>
-            <p class="card-desc"><strong>B</strong>rackets &rarr; <strong>O</strong>rders (powers/roots) &rarr; <strong>D</strong>ivision & <strong>M</strong>ultiplication &rarr; <strong>A</strong>ddition & <strong>S</strong>ubtraction.</p>
+            <p class="card-desc">👑 Rule: Brackets first, then &times; &divide;, then + &minus;!</p>
             <div class="bodmas-builder">
               <label>Equation Expression: 
                 <input type="text" id="bodmas-expr-in" value="3 + 4 * (8 - 2) / 3" style="padding:8px 12px; font-family:var(--font-mono); font-size:1.1rem; width:280px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary);">
@@ -352,8 +364,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-powers">
         <div class="section-intro">
-          <h2>Squares, Square Roots, Cubes & Factorials</h2>
-          <p>Explore 2D square grids, 3D cubic blocks, roots, and factorial cascades.</p>
+          <h2>⚡ Squares, Cubes & Factorials</h2>
+          <p>🧱 Stack square tiles, build 3D cubes, and multiply combos!</p>
         </div>
 
         <div class="sub-tabs">
@@ -367,7 +379,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Square & Square Root Explorer</h3>
-              <p class="card-desc">A square number is the area of a square with side length $n$. The square root is finding the side length from the area!</p>
+              <p class="card-desc">🧱 Count the square tiles to find the secret area!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Side Length ($n$): <strong id="sq-n-val">5</strong></span></div>
                 <input type="range" id="sq-slider" min="1" max="10" value="5">
@@ -389,7 +401,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>3D Cubes & Cube Roots</h3>
-              <p class="card-desc">A cube number represents the volume of a 3D cube: length &times; width &times; height ($n \times n \times n$).</p>
+              <p class="card-desc">📦 Stack 3D blocks into a giant solid cube!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Cube Edge ($n$): <strong id="cube-n-val">3</strong></span></div>
                 <input type="range" id="cube-slider" min="1" max="6" value="3">
@@ -412,7 +424,7 @@
         <div class="subtab-pane" id="pane-pow-factorials">
           <div class="card">
             <h3>Factorial ($n!$) Multiplier Cascade</h3>
-            <p class="card-desc">Factorials represent the number of ways to arrange $n$ items! $n! = n \times (n-1) \times (n-2) \times \dots \times 1$.</p>
+            <p class="card-desc">🎲 How many fun ways can you shuffle items in a row?</p>
             <div class="slider-group" style="max-width:400px;">
               <div class="slider-header"><span>Choose $n$: <strong id="fact-n-val">5</strong></span></div>
               <input type="range" id="fact-slider" min="1" max="8" value="5">
@@ -431,8 +443,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-fractions-applied">
         <div class="section-intro">
-          <h2>Fractions, Decimals, Money & Time</h2>
-          <p>Master proportions, place value, cash register money math, and reading analog/elapsed clock time.</p>
+          <h2>🍰 Fractions, Decimals, Money & Time</h2>
+          <p>🍕 Slice pizza pies, count shop cash, and spin the clock hands!</p>
         </div>
 
         <div class="sub-tabs">
@@ -447,7 +459,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Configure Fraction</h3>
-              <p class="card-desc">Numerator: selected parts. Denominator: total equal parts.</p>
+              <p class="card-desc">🍕 Top is your slices, bottom is the whole pizza!</p>
               <div class="fraction-display-large">
                 <div class="frac-vertical">
                   <span class="f-num" id="f-num-show">3</span>
@@ -490,7 +502,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>100-Square Decimal Grid</h3>
-              <p class="card-desc">Whole = 1.00. Rows = 0.10. Single square = 0.01.</p>
+              <p class="card-desc">💯 100 little squares make 1 big whole block!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Hundredths: <strong id="dec-100-val">45</strong> / 100</span></div>
                 <input type="range" id="dec-100-slider" min="0" max="100" value="45">
@@ -513,7 +525,7 @@
         <div class="subtab-pane" id="pane-fd-money">
           <div class="card">
             <h3>Coins, Bills & Cash Register</h3>
-            <p class="card-desc">Calculate total money and make change! 100 cents = $1.00.</p>
+            <p class="card-desc">💰 Tap coins to add up your register cash!</p>
             <div class="coin-bench-grid">
               <div class="coin-counter-col">
                 <div class="coin-item">
@@ -576,7 +588,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Analog Clock & Time Calculator</h3>
-              <p class="card-desc">Adjust the hours and minutes sliders to watch the clock hands rotate in real-time!</p>
+              <p class="card-desc">⏰ Drag the sliders to spin the clock hands in real time!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Hour: <strong id="clock-hr-val">3</strong></span></div>
                 <input type="range" id="clock-hr-slider" min="1" max="12" value="3">
@@ -606,8 +618,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-algebra-identities">
         <div class="section-intro">
-          <h2>Algebra & Algebraic Identities</h2>
-          <p>Solve equations using the visual balance scale and explore geometric area proofs of famous identities.</p>
+          <h2>📐 Algebra & Balance Scales</h2>
+          <p>⚖️ Keep both sides balanced to find the mystery X box!</p>
         </div>
 
         <div class="sub-tabs">
@@ -620,7 +632,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Algebraic Balance Scale</h3>
-              <p class="card-desc">An equation is a balance scale! Whatever you add, subtract, multiply, or divide on one side must be done to the other.</p>
+              <p class="card-desc">⚖️ Whatever you do to one side, do to the other to keep it level!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Coefficient $a$ (Number of $x$ boxes): <strong id="scale-a-val">2</strong></span></div>
                 <input type="range" id="scale-a" min="1" max="5" value="2">
@@ -652,7 +664,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Geometric Area Proof of Identities</h3>
-              <p class="card-desc">Why is $(a + b)^2 \neq a^2 + b^2$? Because the middle rectangles ($2ab$) complete the square!</p>
+              <p class="card-desc">🎨 Puzzle pieces that fit perfectly into one giant square!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Select Identity:</span></div>
                 <select id="identity-select" style="padding:8px; border-radius:6px; width:100%; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary); font-weight:700;">
@@ -687,8 +699,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-geometry-3d">
         <div class="section-intro">
-          <h2>Geometry, Angles & 3D Vectors</h2>
-          <p>Explore 2D shapes (area & perimeter), interactive protractor angle measuring, and 3D vector coordinates $(x, y, z)$.</p>
+          <h2>🌐 Geometry, Angles & 3D Vectors</h2>
+          <p>📐 Measure shapes, spin protractors, and fly 3D space rockets!</p>
         </div>
 
         <div class="sub-tabs">
@@ -702,7 +714,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>2D Shape Inspector</h3>
-              <p class="card-desc">Select any geometric shape to inspect dimensions, perimeter, and area formula.</p>
+              <p class="card-desc">📐 Pick a shape to see its area and size in action!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Shape Type:</span></div>
                 <select id="shape-select" style="padding:8px; border-radius:6px; width:100%; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary); font-weight:700;">
@@ -739,7 +751,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>Interactive Protractor & Angles</h3>
-              <p class="card-desc">Drag the angle slider or click presets to classify angles: Acute ($< 90^\circ$), Right ($90^\circ$), Obtuse ($> 90^\circ$), Straight ($180^\circ$), Reflex ($> 180^\circ$).</p>
+              <p class="card-desc">📏 Spin the angle arm to see Acute, Right, Obtuse and Reflex angles!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>Angle Degrees: <strong id="angle-deg-val">65°</strong></span></div>
                 <input type="range" id="angle-slider" min="0" max="360" value="65">
@@ -770,7 +782,7 @@
           <div class="grid-2col">
             <div class="card control-card">
               <h3>3D Vector Space: $(x, y, z)$</h3>
-              <p class="card-desc">A 3D vector points from the origin $(0, 0, 0)$ to a point in 3-dimensional space. Magnitude $= \sqrt{x^2 + y^2 + z^2}$.</p>
+              <p class="card-desc">🚀 Aim your 3D rocket through space: X, Y, and Z!</p>
               <div class="slider-group">
                 <div class="slider-header"><span>X coordinate: <strong id="vec-x-val">4</strong></span></div>
                 <input type="range" id="vec-x" min="-8" max="8" value="4">
@@ -803,8 +815,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-hacks">
         <div class="section-intro">
-          <h2>🧠 Math Hacks & Easy Mental Tricks</h2>
-          <p>Learn real mental math superpowers! Fast shortcuts for 11s, squaring numbers ending in 5, the 9s finger trick, and the fraction butterfly method.</p>
+          <h2>🧠 Secret Math Tricks & Superpowers</h2>
+          <p>⚡ Lightning-fast shortcuts to calculate like a math wizard!</p>
         </div>
 
         <div class="hacks-grid">
@@ -812,7 +824,7 @@
           <div class="card hack-card">
             <div class="hack-badge">Trick #1</div>
             <h3>Multiply Any 2-Digit Number by 11</h3>
-            <p class="hack-desc">Spread the digits apart, add them, and sandwich the sum in the middle!</p>
+            <p class="hack-desc">✨ Split digits apart and sandwich their sum in the middle!</p>
             <div class="hack-interactive-box">
               <label>Choose 2-digit number: <input type="number" id="hack-11-in" value="35" min="10" max="99" style="width:70px; padding:6px; font-weight:700; font-family:var(--font-mono);"></label>
               <div class="hack-demo-output" id="hack-11-out">
@@ -825,7 +837,7 @@
           <div class="card hack-card">
             <div class="hack-badge">Trick #2</div>
             <h3>Squaring Numbers Ending in 5</h3>
-            <p class="hack-desc">Multiply the first digit by (digit + 1), then tack <strong>25</strong> onto the end!</p>
+            <p class="hack-desc">⚡ First digit &times; (next number), then add <strong>25</strong> to the end!</p>
             <div class="hack-interactive-box">
               <label>Choose number (ends in 5): 
                 <select id="hack-5-select" style="padding:6px; font-weight:700; font-family:var(--font-mono);">
@@ -847,7 +859,7 @@
           <div class="card hack-card">
             <div class="hack-badge">Trick #3</div>
             <h3>The 9s Times Table Finger Trick</h3>
-            <p class="hack-desc">Put 10 fingers up. Fold down the finger you are multiplying by: fingers to the left are Tens, fingers to the right are Ones!</p>
+            <p class="hack-desc">🖐️ Fold your finger down: left fingers = Tens, right = Ones!</p>
             <div class="hack-interactive-box">
               <label>9 &times; 
                 <select id="hack-9-select" style="padding:6px; font-weight:700; font-family:var(--font-mono);">
@@ -872,7 +884,7 @@
           <div class="card hack-card">
             <div class="hack-badge">Trick #4</div>
             <h3>The Fraction Butterfly Method</h3>
-            <p class="hack-desc">Cross-multiply diagonal wings to add or subtract fractions without finding common denominators!</p>
+            <p class="hack-desc">🦋 Cross-multiply the butterfly wings for instant answers!</p>
             <div class="hack-interactive-box">
               <div class="butterfly-calc" id="hack-bf-out">
                 2/3 + 1/4 &rarr; Wings: (2&times;4) + (3&times;1) = 8 + 3 = 11. Bottom: 3&times;4 = 12 &rarr; <strong>11/12</strong>!
@@ -887,8 +899,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-games">
         <div class="section-intro">
-          <h2>🎮 Math Games & Challenges</h2>
-          <p>Play games, earn coins, maintain your streak, and sharpen mental agility!</p>
+          <h2>🎮 Fun Games & Challenges</h2>
+          <p>🚀 Race against the clock, solve 24 puzzles, and earn coins!</p>
         </div>
 
         <div class="sub-tabs">
@@ -937,7 +949,7 @@
         <div class="subtab-pane" id="pane-game-target24">
           <div class="card" style="max-width:650px; margin:0 auto; text-align:center;">
             <h3>Target 24 Puzzle</h3>
-            <p class="card-desc">Can you combine these 4 numbers using $+$, $-$, $\times$, $\div$ to equal exactly <strong>24</strong>?</p>
+            <p class="card-desc">🎯 Use +, -, &times;, &divide; to combine the 4 cards and make <strong>24</strong>!</p>
             <div class="t24-cards-row" id="t24-cards-box">
               <div class="t24-card">4</div>
               <div class="t24-card">6</div>
@@ -958,8 +970,8 @@
            ======================================================== -->
       <section class="topic-section" id="topic-practice">
         <div class="section-intro">
-          <h2>Interactive Practice & Story Word Problems</h2>
-          <p>Solve dynamic procedural problems across all topics. Earn Coins and XP with every correct answer!</p>
+          <h2>🎯 Practice Arena & Word Adventures</h2>
+          <p>⭐ Solve fun challenges, earn shiny coins, and climb the ranks!</p>
         </div>
 
         <div class="practice-container">
@@ -1257,6 +1269,36 @@
 
         </div>
       </div>
+    </div>
+
+    <!-- Kid-Friendly Animated MathBot Mascot Companion -->
+    <div class="kid-mascot-container" id="kid-mascot">
+      <div class="mascot-speech-bubble" id="mascot-bubble">
+        <span id="mascot-text">Hi Explorer! Tap me for fun math cheers! 🚀</span>
+      </div>
+      <button class="mascot-character-btn" id="mascot-btn" title="Tap MathBot for cheers & sparkles!">
+        <div class="mascot-avatar" id="mascot-avatar">
+          <div class="mascot-antenna">
+            <span class="antenna-ball"></span>
+          </div>
+          <div class="mascot-head">
+            <div class="mascot-ear left"></div>
+            <div class="mascot-face">
+              <div class="mascot-eyes">
+                <span class="mascot-eye left"><span class="pupil"></span></span>
+                <span class="mascot-eye right"><span class="pupil"></span></span>
+              </div>
+              <div class="mascot-cheeks">
+                <span class="mascot-blush left"></span>
+                <span class="mascot-blush right"></span>
+              </div>
+              <div class="mascot-mouth"></div>
+            </div>
+            <div class="mascot-ear right"></div>
+          </div>
+        </div>
+        <span class="mascot-name-pill">MathBot 🤖</span>
+      </button>
     </div>
 
     <!-- Canvas for Confetti -->
