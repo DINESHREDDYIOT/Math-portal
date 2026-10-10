@@ -136,6 +136,9 @@ class MathCraftApp {
     // Init Language & Guided 3-Step Quest Systems
     this.initLanguageSystem();
     this.initQuestSystem();
+
+    // Init Kid Mascot Companion
+    this.initMascot();
   }
 
   /* Theme & Audio */
@@ -223,16 +226,31 @@ class MathCraftApp {
     }
   }
 
+  showFloatingReward(text, selector, className) {
+    const target = document.querySelector(selector);
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const bubble = document.createElement('div');
+    bubble.className = `floating-reward-bubble ${className}`;
+    bubble.textContent = text;
+    bubble.style.left = `${rect.left + rect.width / 2 - 25}px`;
+    bubble.style.top = `${rect.top}px`;
+    document.body.appendChild(bubble);
+    setTimeout(() => bubble.remove(), 1000);
+  }
+
   addCoins(amount) {
     this.coins += amount;
     localStorage.setItem('mc_coins', this.coins);
     this.updateStatsDisplay();
+    this.showFloatingReward(`+${amount} 🪙`, '#header-coins-pill', 'reward-coins');
     if (this.coins >= 100) this.unlockBadge('coins_100');
   }
 
   addXP(amount) {
     this.xp += amount;
     localStorage.setItem('mc_xp', this.xp);
+    this.showFloatingReward(`+${amount} ✨`, '.xp-pill', 'reward-xp');
     this.addCoins(Math.floor(amount / 2));
     this.updateStatsDisplay();
   }
@@ -504,14 +522,14 @@ class MathCraftApp {
         for (let i = 0; i < 10; i++) {
           const slot = document.createElement('div');
           slot.className = 'tf-slot';
-          if (i < a) slot.innerHTML = '<div class="tf-counter red"></div>';
-          else if (i < a + takeB) slot.innerHTML = '<div class="tf-counter yellow"></div>';
+          if (i < a) slot.innerHTML = `<div class="tf-counter red" style="animation-delay:${i * 35}ms"></div>`;
+          else if (i < a + takeB) slot.innerHTML = `<div class="tf-counter yellow" style="animation-delay:${i * 35}ms"></div>`;
           f1.appendChild(slot);
         }
         for (let i = 0; i < 10; i++) {
           const slot = document.createElement('div');
           slot.className = 'tf-slot';
-          if (i < remB) slot.innerHTML = '<div class="tf-counter yellow"></div>';
+          if (i < remB) slot.innerHTML = `<div class="tf-counter yellow" style="animation-delay:${(i + 10) * 35}ms"></div>`;
           f2.appendChild(slot);
         }
       }
@@ -1459,19 +1477,26 @@ class MathCraftApp {
   handleBlitzAnswer(val, btn) {
     if (!this.blitzActive) return;
     if (val === this.blitzCurrentQ.ans) {
+      btn.classList.add('correct');
       this.playTone(700, 'sine', 0.08);
       this.blitzScore += 10 * this.blitzCombo;
       this.blitzCombo = Math.min(5, this.blitzCombo + 1);
       this.blitzCorrect++;
       this.addCoins(2);
       this.addXP(5);
+      if (this.blitzCombo >= 3) {
+        this.cheerMascot(`🔥 Combo x${this.blitzCombo}! On fire!`, true);
+      }
     } else {
+      btn.classList.add('wrong');
       this.playTone(220, 'sawtooth', 0.12);
       this.blitzCombo = 1;
       this.blitzMistakes++;
     }
     this.updateBlitzUI();
-    this.nextBlitzQuestion();
+    setTimeout(() => {
+      if (this.blitzActive) this.nextBlitzQuestion();
+    }, 130);
   }
 
   endBlitz() {
@@ -1726,6 +1751,7 @@ class MathCraftApp {
       this.addCoins(5);
       this.unlockBadge('first_step');
       if (this.streak >= 5) this.unlockBadge('streak_5');
+      this.cheerMascot('🌟 Brilliant! +20 XP earned! ✨', true);
     } else {
       button.classList.add('incorrect');
       feedback.classList.add('error-border');
@@ -1735,6 +1761,7 @@ class MathCraftApp {
       this.streak = 0;
       localStorage.setItem('mc_streak', this.streak);
       this.playError();
+      this.cheerMascot('🌱 Good try! Mistakes make us smarter! 🧠', false);
     }
 
     this.updateStatsDisplay();
@@ -1747,27 +1774,27 @@ class MathCraftApp {
     this.i18n = {
       en: {
         lang_name: 'English',
-        shop_btn: 'Shop',
-        quest_badge: '🚀 3-Step Guided Learning Method',
-        quest_hero_title: 'Learn Any Math Topic With Visuals & Secret Hacks',
-        quest_hero_desc: '1️⃣ Click Start for simple explanations & shortcuts • 2️⃣ Click Understood when ready • 3️⃣ Solve 10 Questions with Hints & Hacks, then click Submit to earn coins!',
-        choose_topic_label: 'Select Topic:',
-        start_lesson_btn: 'Start Lesson',
+        shop_btn: 'Shop 🛍️',
+        quest_badge: '🚀 3-Step Math Adventure',
+        quest_hero_title: 'Play With Math & Learn Magic Tricks! ✨',
+        quest_hero_desc: '1️⃣ Pick a topic • 2️⃣ Tap Start to see tricks • 3️⃣ Solve 10 fun questions to win shiny coins! 🪙',
+        choose_topic_label: 'Pick a Topic:',
+        start_lesson_btn: 'Play & Learn! 🚀',
         lang_modal_title: '🌐 Select Language / भाषा / Idioma',
-        lang_modal_sub: 'Choose your preferred language. All lessons, hacks, hints, and quiz questions will automatically adapt!',
-        understood_btn: 'Understood! Take 10-Question Challenge',
-        hint_btn: 'Need a Hint?',
-        hack_btn: 'Use the Hack',
+        lang_modal_sub: 'Choose your preferred language! All fun lessons, tricks, and quests will adapt!',
+        understood_btn: 'Got it! Let\'s Play 10 Questions! 🎯',
+        hint_btn: '💡 Hint',
+        hack_btn: '⚡ Super Trick',
         hint_title: '💡 Helpful Hint:',
-        hack_title: '⚡ Secret Hack Reminder:',
-        submit_btn: 'Check & Submit Answer',
+        hack_title: '⚡ Secret Trick:',
+        submit_btn: 'Check Answer! ✨',
         next_btn: 'Next Question →',
-        quest_complete_title: '10-Question Quest Complete! 🎉',
-        quest_complete_msg: 'Incredible mastery! You applied the hacks and crushed all 10 challenges like a true math wizard!',
-        correct_title: 'Correct! 🎉',
-        wrong_title: 'Not quite, but let\'s review:',
-        step_1_label: 'Step 1: Explanations & Visual Hacks',
-        step_2_label: 'Step 2: 10-Question Challenge',
+        quest_complete_title: 'You Won the Quest! 🏆🎉',
+        quest_complete_msg: 'Super job, Math Champion! You used the tricks and solved all 10 puzzles! 🚀',
+        correct_title: 'Yes! Super Job! 🎉',
+        wrong_title: 'Almost! Let\'s see why:',
+        step_1_label: 'Step 1: Cool Tricks & Visuals',
+        step_2_label: 'Step 2: 10 Fun Questions',
         score_label: 'Score:',
         question_of: 'Question {current} of {total}'
       },
@@ -2341,11 +2368,13 @@ class MathCraftApp {
       this.addXP(10);
       this.playChime();
       this.fireConfetti();
+      this.cheerMascot('🎉 Super answer! +15 🪙 Coins! ⭐', true);
     } else {
       feedbackBox.className = 'quest-feedback wrong-feedback';
       if (feedbackTitle) feedbackTitle.textContent = dict.wrong_title;
       if (feedbackDetail) feedbackDetail.innerHTML = `The correct answer is <strong>${q.answer}</strong>. ${q.explanation}`;
       this.playError();
+      this.cheerMascot('💪 You got this! Check the hint for the next one!', false);
     }
 
     // Update Header stats & Quest score display
@@ -2394,6 +2423,7 @@ class MathCraftApp {
     for (let i = 0; i < 4; i++) {
       setTimeout(() => this.fireConfetti(), i * 400);
     }
+    this.cheerMascot('🏆 WOW! Quest Complete! You rock! 🚀', true);
 
     if (this.questScore >= 8) {
       this.unlockBadge('first_step');
@@ -2698,6 +2728,74 @@ class MathCraftApp {
 
     // Return specific topic or fallback to addition
     return topics[topicKey] || topics.addition;
+  }
+
+  /* Kid-Friendly Mascot Companion */
+  initMascot() {
+    const btn = document.getElementById('mascot-btn');
+    const avatar = document.getElementById('mascot-avatar');
+    const bubble = document.getElementById('mascot-bubble');
+    const textEl = document.getElementById('mascot-text');
+    if (!btn || !avatar || !textEl) return;
+
+    const funQuotes = [
+      'You are a math superstar! ⭐',
+      'High five! Let\'s solve more puzzles! ✋',
+      'Math is like a superpower! 🦸‍♂️',
+      'Did you know? A circle has 360 degrees! 🍩',
+      'Keep going! Your brain is growing! 🧠✨',
+      'Boing! Tap me anytime for sparkles! 🎈',
+      'Ready for the next game? Let\'s go! 🚀',
+      'Numbers are everywhere around us! 🌍',
+      'Every mistake helps you learn! You rock! 💫'
+    ];
+    let quoteIdx = 0;
+
+    btn.addEventListener('click', () => {
+      // Play joyful chirp
+      this.playTone(587.33, 'sine', 0.1);
+      setTimeout(() => this.playTone(880, 'sine', 0.15), 90);
+
+      // Trigger 360 flip
+      avatar.classList.remove('flipping');
+      void avatar.offsetWidth;
+      avatar.classList.add('flipping');
+      setTimeout(() => avatar.classList.remove('flipping'), 850);
+
+      // Pop speech bubble
+      bubble?.classList.remove('pop');
+      void bubble?.offsetWidth;
+      bubble?.classList.add('pop');
+
+      // Change quote
+      quoteIdx = (quoteIdx + 1) % funQuotes.length;
+      textEl.textContent = funQuotes[quoteIdx];
+
+      // Sparkles
+      this.fireConfetti();
+    });
+  }
+
+  cheerMascot(msg, isVictory = false) {
+    const avatar = document.getElementById('mascot-avatar');
+    const bubble = document.getElementById('mascot-bubble');
+    const textEl = document.getElementById('mascot-text');
+    if (!textEl) return;
+
+    textEl.textContent = msg;
+
+    if (avatar) {
+      avatar.classList.remove('dancing');
+      void avatar.offsetWidth;
+      avatar.classList.add('dancing');
+      setTimeout(() => avatar.classList.remove('dancing'), isVictory ? 2200 : 1200);
+    }
+
+    if (bubble) {
+      bubble.classList.remove('pop');
+      void bubble.offsetWidth;
+      bubble.classList.add('pop');
+    }
   }
 
 }
