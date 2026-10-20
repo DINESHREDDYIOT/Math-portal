@@ -58,8 +58,8 @@
           <span class="stat-label" id="streak-label-text">Day Streak!</span>
         </button>
 
-        <!-- Language Button (English / বাংলা / हिन्दी / Español) -->
-        <button id="btn-language" class="stat-pill lang-pill" title="Change Language / ভাষা পরিবর্তন">
+        <!-- World Languages Button -->
+        <button id="btn-language" class="stat-pill lang-pill" title="All World Languages / সকল ভাষা">
           <span class="stat-icon">🌐</span>
           <span id="current-lang-label">English</span>
         </button>
@@ -87,6 +87,20 @@
         </button>
       </div>
     </header>
+
+    <!-- Prominent "Let's Start a Lesson" CTA Banner -->
+    <div class="lesson-cta-banner">
+      <div class="lesson-cta-left">
+        <span class="lesson-cta-icon">🎓</span>
+        <div class="lesson-cta-info">
+          <h3 data-i18n="lesson_cta_title">10-Question Coin Challenge!</h3>
+          <p data-i18n="lesson_cta_desc">Right = <strong>+1 Coin 🪙</strong> &bull; Wrong = <strong>-1 Coin 🪙</strong>!</p>
+        </div>
+      </div>
+      <button id="btn-start-lesson-cta" class="kid-btn btn-lesson-start">
+        🚀 <span data-i18n="lesson_cta_btn">Let's Start a Lesson!</span> 🎯
+      </button>
+    </div>
 
     <!-- 5 Big Bubbly Section Buttons -->
     <nav class="kid-nav">
@@ -154,7 +168,7 @@
             </div>
           </div>
 
-          <!-- Toy Picker: Balls, Bats, Puppies, Apples, Ducks -->
+          <!-- Toy Picker -->
           <div class="toy-picker-row">
             <span data-i18n="pick_toy">Pick toys:</span>
             <div class="toy-options">
@@ -515,6 +529,66 @@
 
     </main>
 
+    <!-- ==========================================
+         10-QUESTION LESSON CHALLENGE MODAL
+         (+1 Coin on correct, -1 Coin on wrong!)
+         ========================================== -->
+    <div class="kid-modal-overlay hidden" id="lesson-modal">
+      <div class="kid-modal-card lesson-modal-card">
+        <div class="modal-header">
+          <div class="lesson-header-title">
+            <span class="lesson-badge">🎯 Question <span id="lesson-q-index">1</span> of 10</span>
+            <span class="lesson-coins-tracker">Session: <strong id="lesson-session-coins">+0</strong> 🪙</span>
+          </div>
+          <button class="modal-close-btn" id="btn-close-lesson">✖</button>
+        </div>
+
+        <!-- 10 Question Progress Dots -->
+        <div class="lesson-dots-bar" id="lesson-dots-bar">
+          <!-- 10 dots populated by JS -->
+        </div>
+
+        <!-- Active Question Stage -->
+        <div class="lesson-question-stage" id="lesson-question-stage">
+          <div class="lesson-prompt-box">
+            <h3 id="lesson-prompt-text">How many balls do you see?</h3>
+            <button class="speaker-btn" id="btn-speak-lesson-q" title="Hear Question">🔊</button>
+          </div>
+
+          <div class="lesson-visual-display" id="lesson-visual-display">
+            <!-- Dynamic visuals -->
+          </div>
+
+          <div class="lesson-options-grid" id="lesson-options-grid">
+            <!-- 3 choice buttons -->
+          </div>
+
+          <div class="lesson-feedback-box hidden" id="lesson-feedback-box">
+            <span id="lesson-feedback-emoji">🎉</span>
+            <span id="lesson-feedback-text">Correct! +1 Coin 🪙</span>
+          </div>
+
+          <div class="lesson-next-row hidden" id="lesson-next-row">
+            <button class="kid-btn btn-primary" id="btn-lesson-next">
+              Next Question ➡️
+            </button>
+          </div>
+        </div>
+
+        <!-- Lesson Completed Screen -->
+        <div class="lesson-complete-stage hidden" id="lesson-complete-stage">
+          <div class="lesson-trophy">🏆</div>
+          <h2>Lesson Challenge Complete!</h2>
+          <p id="lesson-summary-text">You got 8 out of 10 correct!</p>
+          <div class="lesson-net-coins" id="lesson-net-coins">+6 🪙 Coins Earned!</div>
+          <div class="lesson-complete-actions">
+            <button class="kid-btn btn-primary" id="btn-lesson-restart">🔁 Play Another Lesson</button>
+            <button class="kid-btn btn-secondary" id="btn-lesson-finish">Done 🌟</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Streak Rewards Modal (7-day = 7 coins, 14-day = 14 coins, etc.) -->
     <div class="kid-modal-overlay hidden" id="streak-modal">
       <div class="kid-modal-card streak-modal-card">
@@ -566,47 +640,31 @@
       </div>
     </div>
 
-    <!-- Language Selector Modal (English, বাংলা, हिन्दी, Español) -->
+    <!-- Global World Languages Modal (All Languages in the World!) -->
     <div class="kid-modal-overlay hidden" id="language-modal">
-      <div class="kid-modal-card" style="max-width: 440px;">
+      <div class="kid-modal-card world-language-card">
         <div class="modal-header">
-          <h2>🌐 Choose Language / ভাষা</h2>
+          <h2>🌐 All Languages in the World / সকল ভাষা</h2>
           <button class="modal-close-btn" id="btn-close-lang">✖</button>
         </div>
-        <p class="modal-subtitle">Select your favorite language:</p>
+        <p class="modal-subtitle">Choose from all major world languages or search below:</p>
 
-        <div class="languages-grid">
-          <button class="lang-choice-btn active" data-lang="en">
-            <span class="lang-flag">🇬🇧</span>
-            <div class="lang-info">
-              <strong>English</strong>
-              <span>Hello & Welcome!</span>
-            </div>
-          </button>
+        <!-- Search Bar -->
+        <div class="lang-search-wrapper">
+          <input type="text" id="lang-search-input" placeholder="🔍 Search any language (e.g. Bengali, Arabic, French, Japanese, Swahili)...">
+        </div>
 
-          <button class="lang-choice-btn" data-lang="bn">
-            <span class="lang-flag">🇧🇩</span>
-            <div class="lang-info">
-              <strong>বাংলা (Bengali)</strong>
-              <span>স্বাগতম ও এসো শিখি!</span>
-            </div>
-          </button>
+        <!-- Scrollable Global Languages Grid -->
+        <div class="languages-grid-scrollable" id="world-languages-container">
+          <!-- Populated with all major world languages -->
+        </div>
 
-          <button class="lang-choice-btn" data-lang="hi">
-            <span class="lang-flag">🇮🇳</span>
-            <div class="lang-info">
-              <strong>हिन्दी (Hindi)</strong>
-              <span>नमस्ते और स्वागत है!</span>
-            </div>
-          </button>
-
-          <button class="lang-choice-btn" data-lang="es">
-            <span class="lang-flag">🇪🇸</span>
-            <div class="lang-info">
-              <strong>Español (Spanish)</strong>
-              <span>¡Hola y bienvenido!</span>
-            </div>
-          </button>
+        <!-- Google Instant World Translator (Supports 130+ Languages) -->
+        <div class="google-translate-box">
+          <div class="gt-header">
+            <span>🌍 Instant World Translator (130+ languages):</span>
+          </div>
+          <div id="google_translate_element"></div>
         </div>
       </div>
     </div>
@@ -691,6 +749,18 @@
     <!-- Confetti Canvas -->
     <canvas id="confetti-canvas"></canvas>
   </div>
+
+  <!-- Google Translate Element Init Function & Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script src="app.js"></script>
 </body>
