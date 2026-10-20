@@ -1,7 +1,8 @@
 /* ========================================================
    Math Galaxy 🚀 Kid-Friendly Interactive Engine
    Numbers 1-10, Adding Toys, Cookie Crunch, Shapes,
-   Games, Streak Milestone Bonuses & Multi-Language (Bengali, Hindi, Spanish, English)
+   Games, Streak Milestone Bonuses, 10-Question Coin Challenge
+   & ALL World Languages (Bengali, Hindi, Spanish, French, Arabic, etc.)
    ======================================================== */
 
 class MathGalaxyApp {
@@ -41,6 +42,13 @@ class MathGalaxyApp {
     this.basketACount = 2;
     this.basketBCount = 5;
 
+    // State: 10-Question Lesson Challenge
+    this.lessonActive = false;
+    this.lessonIndex = 0;
+    this.lessonScore = 0;
+    this.lessonCoinsEarned = 0;
+    this.lessonAnswered = false;
+
     // Init Audio Context
     this.initAudio();
 
@@ -62,6 +70,8 @@ class MathGalaxyApp {
     this.initStickerBook();
     this.initMascot();
     this.initSettings();
+    this.initLessonChallenge();
+    this.initWorldLanguages();
     this.updateStatsDisplay();
 
     // Welcome cheer
@@ -121,6 +131,11 @@ class MathGalaxyApp {
     notes.forEach((f, i) => this.playTone(f, 'triangle', 0.2, i * 0.1));
   }
 
+  playOops() {
+    this.playTone(280, 'sawtooth', 0.12, 0);
+    this.playTone(200, 'sawtooth', 0.18, 0.08);
+  }
+
   speak(text) {
     if (!this.voiceEnabled || !('speechSynthesis' in window)) return;
     try {
@@ -128,16 +143,19 @@ class MathGalaxyApp {
       const u = new SpeechSynthesisUtterance(text);
       u.pitch = 1.3;
       u.rate = 0.9;
-      if (this.currentLang === 'bn') u.lang = 'bn-BD';
-      else if (this.currentLang === 'hi') u.lang = 'hi-IN';
-      else if (this.currentLang === 'es') u.lang = 'es-ES';
-      else u.lang = 'en-US';
+
+      const langMap = {
+        bn: 'bn-BD', hi: 'hi-IN', es: 'es-ES', fr: 'fr-FR', de: 'de-DE',
+        zh: 'zh-CN', ja: 'ja-JP', ar: 'ar-SA', ru: 'ru-RU', it: 'it-IT',
+        pt: 'pt-BR', te: 'te-IN', ta: 'ta-IN', ur: 'ur-PK'
+      };
+      u.lang = langMap[this.currentLang] || 'en-US';
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }
 
   /* ========================================================
-     TRANSLATIONS (English, Bengali বাংলা, Hindi हिन्दी, Spanish Español)
+     TRANSLATIONS & CORE DICTIONARIES
      ======================================================== */
   initTranslations() {
     this.i18n = {
@@ -149,6 +167,9 @@ class MathGalaxyApp {
         stickers: 'Stickers',
         streak_label: 'Day Streak!',
         welcome_mascot: 'Welcome to Math Galaxy! Tap me for cheers! 🚀',
+        lesson_cta_title: '10-Question Coin Challenge!',
+        lesson_cta_desc: 'Right = +1 Coin 🪙 • Wrong = -1 Coin 🪙!',
+        lesson_cta_btn: "Let's Start a Lesson!",
         nav_count: 'Count 1 to 10',
         nav_count_sub: 'Meet Numbers!',
         nav_add: 'Put Together',
@@ -210,6 +231,9 @@ class MathGalaxyApp {
         stickers: 'স্টিকার',
         streak_label: 'দিনের স্ট্রিক!',
         welcome_mascot: 'ম্যাথ গ্যালাক্সিতে স্বাগতম! আমার গায়ে ট্যাপ করো! 🚀',
+        lesson_cta_title: '১০টি প্রশ্নের কয়েন চ্যালেঞ্জ!',
+        lesson_cta_desc: 'সঠিক হলে = +১ কয়েন 🪙 • ভুল হলে = -১ কয়েন 🪙!',
+        lesson_cta_btn: 'এসো পাঠ শুরু করি!',
         nav_count: '১ থেকে ১০ গণনা',
         nav_count_sub: 'সংখ্যা চেনা!',
         nav_add: 'একত্রে রাখা (+)',
@@ -271,6 +295,9 @@ class MathGalaxyApp {
         stickers: 'स्टिकर',
         streak_label: 'दिन की स्ट्रीक!',
         welcome_mascot: 'मैथ गैलेक्सी में स्वागत है! मुझसे मिलो! 🚀',
+        lesson_cta_title: '१० प्रश्नों की सिक्का चुनौती!',
+        lesson_cta_desc: 'सही = +१ सिक्का 🪙 • गलत = -१ सिक्का 🪙!',
+        lesson_cta_btn: 'चलो पाठ शुरू करें!',
         nav_count: '१ से १० गिनती',
         nav_count_sub: 'संख्या पहचान!',
         nav_add: 'साथ मिलाना (+)',
@@ -332,6 +359,9 @@ class MathGalaxyApp {
         stickers: 'Pegatinas',
         streak_label: '¡Racha de días!',
         welcome_mascot: '¡Bienvenido a Math Galaxy! ¡Tócame para animarte! 🚀',
+        lesson_cta_title: '¡Desafío de 10 Preguntas!',
+        lesson_cta_desc: '¡Correcto = +1 Moneda 🪙 • Incorrecto = -1 Moneda 🪙!',
+        lesson_cta_btn: '¡Comencemos una lección!',
         nav_count: 'Contar 1 al 10',
         nav_count_sub: '¡Conoce números!',
         nav_add: 'Juntar (+)',
@@ -393,12 +423,12 @@ class MathGalaxyApp {
     return dict[key] || this.i18n.en[key] || key;
   }
 
-  setLanguage(lang) {
+  setLanguage(lang, displayName) {
     this.currentLang = lang;
     localStorage.setItem('mg_lang', lang);
-    const langNames = { en: 'English', bn: 'বাংলা', hi: 'हिन्दी', es: 'Español' };
+
     const label = document.getElementById('current-lang-label');
-    if (label) label.textContent = langNames[lang] || 'English';
+    if (label) label.textContent = displayName || lang.toUpperCase();
 
     // Update text content with data-i18n attributes
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -489,7 +519,7 @@ class MathGalaxyApp {
 
     document.getElementById('btn-speak-count')?.addEventListener('click', () => {
       const dict = this.i18n[this.currentLang] || this.i18n.en;
-      const word = dict.nums[this.currentNum] || this.currentNum;
+      const word = dict.nums ? dict.nums[this.currentNum] : this.currentNum;
       this.speak(`${this.currentNum}! ${word}!`);
     });
 
@@ -515,7 +545,7 @@ class MathGalaxyApp {
 
     bigNum.textContent = this.currentNum;
     const dict = this.i18n[this.currentLang] || this.i18n.en;
-    bigWord.textContent = dict.nums[this.currentNum] || this.currentNum;
+    bigWord.textContent = (dict.nums && dict.nums[this.currentNum]) || this.currentNum;
 
     itemsBox.innerHTML = '';
     for (let i = 1; i <= this.currentNum; i++) {
@@ -858,7 +888,6 @@ class MathGalaxyApp {
      TAB 5: PLAY GAMES
      ======================================================== */
   initGamesTab() {
-    // Mini tabs
     const miniBtns = document.querySelectorAll('.mini-tab-btn');
     miniBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -895,8 +924,7 @@ class MathGalaxyApp {
     const msg = document.getElementById('balloon-target-msg');
     if (!sky) return;
 
-    // Pick target
-    this.balloonTarget = Math.floor(Math.random() * 5) + 1; // 1 to 5
+    this.balloonTarget = Math.floor(Math.random() * 5) + 1;
     if (msg) msg.textContent = `Can you find and pop balloon number ${this.balloonTarget}? 🎈`;
 
     sky.innerHTML = '';
@@ -943,7 +971,7 @@ class MathGalaxyApp {
     const feedback = document.getElementById('duck-feedback');
     if (!pond || !optionsRow) return;
 
-    this.duckCount = Math.floor(Math.random() * 4) + 2; // 2, 3, 4, 5
+    this.duckCount = Math.floor(Math.random() * 4) + 2;
     const animals = ['🦆', '🐶', '🐱', '🐸', '🐰'];
     this.duckToy = animals[Math.floor(Math.random() * animals.length)];
 
@@ -1049,6 +1077,335 @@ class MathGalaxyApp {
   }
 
   /* ========================================================
+     10-QUESTION COIN CHALLENGE (LESSON)
+     Correct: +1 Coin 🪙 | Wrong: -1 Coin 🪙!
+     ======================================================== */
+  initLessonChallenge() {
+    this.lessonQuestions = [
+      { prompt: 'How many balls do you see? Count them!', visual: '⚽ ⚽ ⚽', options: ['2', '3', '4'], answer: '3' },
+      { prompt: '2 balls ⚽ + 2 bats 🏏 = how many in all?', visual: '⚽ ⚽ + 🏏 🏏', options: ['3', '4', '5'], answer: '4' },
+      { prompt: '3 cookies - 1 cookie eaten = how many left?', visual: '🍪 🍪 (1 eaten)', options: ['1', '2', '3'], answer: '2' },
+      { prompt: 'Which shape is round like a ball? ⚽', visual: '🟢 ⚽ 🥞', options: ['Circle 🟢', 'Square 🟦', 'Triangle 🔺'], answer: 'Circle 🟢' },
+      { prompt: 'Which number is BIGGER?', visual: '🐘 5   vs   🐭 2', options: ['2', '5', '1'], answer: '5' },
+      { prompt: 'How many cute ducks in the pond?', visual: '🦆 🦆', options: ['1', '2', '4'], answer: '2' },
+      { prompt: '1 apple 🍎 + 2 apples 🍎 = how many in all?', visual: '🍎 + 🍎 🍎', options: ['2', '3', '4'], answer: '3' },
+      { prompt: 'Which shape has 3 pointy corners like pizza 🍕?', visual: '🍕 🔺 🥳', options: ['Triangle 🔺', 'Circle 🟢', 'Square 🟦'], answer: 'Triangle 🔺' },
+      { prompt: '4 cookies - 2 cookies eaten = how many left?', visual: '🍪 🍪 🍪 🍪 (2 eaten)', options: ['1', '2', '3'], answer: '2' },
+      { prompt: 'Count the shiny stars in the sky!', visual: '⭐ ⭐ ⭐ ⭐', options: ['3', '4', '5'], answer: '4' }
+    ];
+
+    const btnStart = document.getElementById('btn-start-lesson-cta');
+    const modalLesson = document.getElementById('lesson-modal');
+    const btnClose = document.getElementById('btn-close-lesson');
+    const btnNext = document.getElementById('btn-lesson-next');
+    const btnRestart = document.getElementById('btn-lesson-restart');
+    const btnFinish = document.getElementById('btn-lesson-finish');
+
+    btnStart?.addEventListener('click', () => {
+      this.playPop();
+      this.startLesson();
+    });
+
+    btnClose?.addEventListener('click', () => {
+      modalLesson?.classList.add('hidden');
+      this.lessonActive = false;
+    });
+
+    btnNext?.addEventListener('click', () => {
+      this.nextLessonQuestion();
+    });
+
+    btnRestart?.addEventListener('click', () => {
+      this.startLesson();
+    });
+
+    btnFinish?.addEventListener('click', () => {
+      modalLesson?.classList.add('hidden');
+      this.lessonActive = false;
+    });
+
+    document.getElementById('btn-speak-lesson-q')?.addEventListener('click', () => {
+      const q = this.lessonQuestions[this.lessonIndex];
+      if (q) this.speak(q.prompt);
+    });
+  }
+
+  startLesson() {
+    this.lessonActive = true;
+    this.lessonIndex = 0;
+    this.lessonScore = 0;
+    this.lessonCoinsEarned = 0;
+    this.lessonDotResults = [];
+
+    const modal = document.getElementById('lesson-modal');
+    const stage = document.getElementById('lesson-question-stage');
+    const complete = document.getElementById('lesson-complete-stage');
+
+    modal?.classList.remove('hidden');
+    stage?.classList.remove('hidden');
+    complete?.classList.add('hidden');
+
+    this.renderLessonDots();
+    this.renderLessonQuestion();
+  }
+
+  renderLessonDots() {
+    const dotsBar = document.getElementById('lesson-dots-bar');
+    if (!dotsBar) return;
+    dotsBar.innerHTML = '';
+
+    for (let i = 0; i < 10; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'lesson-dot';
+      dot.textContent = i + 1;
+      if (i === this.lessonIndex) dot.classList.add('active');
+      if (this.lessonDotResults && this.lessonDotResults[i] === true) {
+        dot.classList.add('dot-correct');
+        dot.textContent = '✓';
+      } else if (this.lessonDotResults && this.lessonDotResults[i] === false) {
+        dot.classList.add('dot-wrong');
+        dot.textContent = '✕';
+      }
+      dotsBar.appendChild(dot);
+    }
+  }
+
+  renderLessonQuestion() {
+    this.lessonAnswered = false;
+    const qIndexEl = document.getElementById('lesson-q-index');
+    const trackerEl = document.getElementById('lesson-session-coins');
+    const promptEl = document.getElementById('lesson-prompt-text');
+    const visualEl = document.getElementById('lesson-visual-display');
+    const optsGrid = document.getElementById('lesson-options-grid');
+    const fbBox = document.getElementById('lesson-feedback-box');
+    const nextRow = document.getElementById('lesson-next-row');
+
+    if (qIndexEl) qIndexEl.textContent = this.lessonIndex + 1;
+    if (trackerEl) trackerEl.textContent = (this.lessonCoinsEarned >= 0 ? `+${this.lessonCoinsEarned}` : `${this.lessonCoinsEarned}`);
+
+    fbBox?.classList.add('hidden');
+    nextRow?.classList.add('hidden');
+
+    const q = this.lessonQuestions[this.lessonIndex];
+    if (!q) return;
+
+    if (promptEl) promptEl.textContent = q.prompt;
+    if (visualEl) visualEl.textContent = q.visual;
+
+    if (optsGrid) {
+      optsGrid.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'lesson-opt-btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => this.handleLessonAnswer(opt, btn, q));
+        optsGrid.appendChild(btn);
+      });
+    }
+
+    this.renderLessonDots();
+  }
+
+  handleLessonAnswer(selected, btn, q) {
+    if (this.lessonAnswered) return;
+    this.lessonAnswered = true;
+
+    const isCorrect = (String(selected).trim() === String(q.answer).trim());
+    const fbBox = document.getElementById('lesson-feedback-box');
+    const fbEmoji = document.getElementById('lesson-feedback-emoji');
+    const fbText = document.getElementById('lesson-feedback-text');
+    const nextRow = document.getElementById('lesson-next-row');
+
+    document.querySelectorAll('.lesson-opt-btn').forEach(b => {
+      b.disabled = true;
+      if (String(b.textContent).trim() === String(q.answer).trim()) {
+        b.classList.add('correct');
+      }
+    });
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      this.playChime();
+      this.fireConfetti();
+      this.lessonScore++;
+      this.lessonCoinsEarned++;
+      this.addCoins(1); // Gain +1 coin!
+      this.lessonDotResults[this.lessonIndex] = true;
+
+      fbBox.className = 'lesson-feedback-box correct-fb';
+      if (fbEmoji) fbEmoji.textContent = '🎉';
+      if (fbText) fbText.textContent = 'Super Job! Correct! +1 Coin 🪙';
+      this.cheerMascot('🎉 Correct! You won +1 Coin! 🪙', true);
+      this.speak('Correct! You won one coin!');
+    } else {
+      btn.classList.add('wrong');
+      this.playOops();
+      this.lessonCoinsEarned--;
+      this.loseCoin(1); // Lose -1 coin!
+      this.lessonDotResults[this.lessonIndex] = false;
+
+      fbBox.className = 'lesson-feedback-box wrong-fb';
+      if (fbEmoji) fbEmoji.textContent = '😅';
+      if (fbText) fbText.textContent = `Oops! The answer is ${q.answer}. -1 Coin 🪙`;
+      this.cheerMascot(`Oops! Don't worry, keep trying!`, false);
+      this.speak('Oops! Lost one coin! Try the next one!');
+    }
+
+    fbBox?.classList.remove('hidden');
+    nextRow?.classList.remove('hidden');
+
+    const trackerEl = document.getElementById('lesson-session-coins');
+    if (trackerEl) trackerEl.textContent = (this.lessonCoinsEarned >= 0 ? `+${this.lessonCoinsEarned}` : `${this.lessonCoinsEarned}`);
+
+    this.renderLessonDots();
+  }
+
+  nextLessonQuestion() {
+    if (this.lessonIndex < 9) {
+      this.lessonIndex++;
+      this.renderLessonQuestion();
+    } else {
+      this.finishLesson();
+    }
+  }
+
+  finishLesson() {
+    const stage = document.getElementById('lesson-question-stage');
+    const complete = document.getElementById('lesson-complete-stage');
+    const summaryText = document.getElementById('lesson-summary-text');
+    const netCoinsText = document.getElementById('lesson-net-coins');
+
+    stage?.classList.add('hidden');
+    complete?.classList.remove('hidden');
+
+    if (summaryText) summaryText.textContent = `You answered ${this.lessonScore} out of 10 correct!`;
+    if (netCoinsText) {
+      if (this.lessonCoinsEarned >= 0) {
+        netCoinsText.textContent = `+${this.lessonCoinsEarned} 🪙 Coins Earned! 🎉`;
+      } else {
+        netCoinsText.textContent = `${this.lessonCoinsEarned} 🪙 Coins this round!`;
+      }
+    }
+
+    this.playFanfare();
+    this.fireConfetti();
+    this.cheerMascot(`🏆 Lesson complete! You scored ${this.lessonScore}/10! 🚀`, true);
+  }
+
+  /* ========================================================
+     WORLD LANGUAGES SYSTEM (Search & All Languages)
+     ======================================================== */
+  initWorldLanguages() {
+    this.worldLanguagesList = [
+      { code: 'en', name: 'English', native: 'English', flag: '🇬🇧' },
+      { code: 'bn', name: 'Bengali', native: 'বাংলা', flag: '🇧🇩' },
+      { code: 'hi', name: 'Hindi', native: 'हिन्दी', flag: '🇮🇳' },
+      { code: 'es', name: 'Spanish', native: 'Español', flag: '🇪🇸' },
+      { code: 'fr', name: 'French', native: 'Français', flag: '🇫🇷' },
+      { code: 'de', name: 'German', native: 'Deutsch', flag: '🇩🇪' },
+      { code: 'zh', name: 'Chinese', native: '中文', flag: '🇨🇳' },
+      { code: 'ja', name: 'Japanese', native: '日本語', flag: '🇯🇵' },
+      { code: 'ko', name: 'Korean', native: '한국어', flag: '🇰🇷' },
+      { code: 'ar', name: 'Arabic', native: 'العربية', flag: '🇸🇦' },
+      { code: 'ru', name: 'Russian', native: 'Русский', flag: '🇷🇺' },
+      { code: 'pt', name: 'Portuguese', native: 'Português', flag: '🇧🇷' },
+      { code: 'it', name: 'Italian', native: 'Italiano', flag: '🇮🇹' },
+      { code: 'nl', name: 'Dutch', native: 'Nederlands', flag: '🇳🇱' },
+      { code: 'tr', name: 'Turkish', native: 'Türkçe', flag: '🇹🇷' },
+      { code: 'vi', name: 'Vietnamese', native: 'Tiếng Việt', flag: '🇻🇳' },
+      { code: 'th', name: 'Thai', native: 'ไทย', flag: '🇹🇭' },
+      { code: 'id', name: 'Indonesian', native: 'Bahasa Indonesia', flag: '🇮🇩' },
+      { code: 'te', name: 'Telugu', native: 'తెలుగు', flag: '🇮🇳' },
+      { code: 'ta', name: 'Tamil', native: 'தமிழ்', flag: '🇮🇳' },
+      { code: 'mr', name: 'Marathi', native: 'मराठी', flag: '🇮🇳' },
+      { code: 'ur', name: 'Urdu', native: 'اردو', flag: '🇵🇰' },
+      { code: 'pa', name: 'Punjabi', native: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
+      { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી', flag: '🇮🇳' },
+      { code: 'ml', name: 'Malayalam', native: 'മലയാളം', flag: '🇮🇳' },
+      { code: 'kn', name: 'Kannada', native: 'ಕನ್ನಡ', flag: '🇮🇳' },
+      { code: 'sw', name: 'Swahili', native: 'Kiswahili', flag: '🇰🇪' },
+      { code: 'pl', name: 'Polish', native: 'Polski', flag: '🇵🇱' },
+      { code: 'uk', name: 'Ukrainian', native: 'Українська', flag: '🇺🇦' },
+      { code: 'el', name: 'Greek', native: 'Ελληνικά', flag: '🇬🇷' },
+      { code: 'he', name: 'Hebrew', native: 'עברית', flag: '🇮🇱' },
+      { code: 'sv', name: 'Swedish', native: 'Svenska', flag: '🇸🇪' },
+      { code: 'tl', name: 'Filipino', native: 'Tagalog', flag: '🇵🇭' },
+      { code: 'ms', name: 'Malay', native: 'Bahasa Melayu', flag: '🇲🇾' },
+      { code: 'fa', name: 'Persian', native: 'فارسی', flag: '🇮🇷' },
+      { code: 'ro', name: 'Romanian', native: 'Română', flag: '🇷🇴' },
+      { code: 'hu', name: 'Hungarian', native: 'Magyar', flag: '🇭🇺' },
+      { code: 'cs', name: 'Czech', native: 'Čeština', flag: '🇨🇿' },
+      { code: 'da', name: 'Danish', native: 'Dansk', flag: '🇩🇰' },
+      { code: 'fi', name: 'Finnish', native: 'Suomi', flag: '🇫🇮' },
+      { code: 'no', name: 'Norwegian', native: 'Norsk', flag: '🇳🇴' }
+    ];
+
+    const container = document.getElementById('world-languages-container');
+    const searchInput = document.getElementById('lang-search-input');
+    const btnLang = document.getElementById('btn-language');
+    const modalLang = document.getElementById('language-modal');
+    const btnCloseLang = document.getElementById('btn-close-lang');
+
+    btnLang?.addEventListener('click', () => {
+      this.playPop();
+      modalLang?.classList.remove('hidden');
+      if (searchInput) searchInput.value = '';
+      this.renderWorldLanguages(this.worldLanguagesList);
+    });
+
+    btnCloseLang?.addEventListener('click', () => {
+      modalLang?.classList.add('hidden');
+    });
+
+    searchInput?.addEventListener('input', (e) => {
+      const q = (e.target.value || '').toLowerCase().trim();
+      const filtered = this.worldLanguagesList.filter(l => 
+        l.name.toLowerCase().includes(q) || 
+        l.native.toLowerCase().includes(q) ||
+        l.code.toLowerCase().includes(q)
+      );
+      this.renderWorldLanguages(filtered);
+    });
+
+    this.renderWorldLanguages(this.worldLanguagesList);
+  }
+
+  renderWorldLanguages(list) {
+    const container = document.getElementById('world-languages-container');
+    const modalLang = document.getElementById('language-modal');
+    if (!container) return;
+
+    container.innerHTML = '';
+    list.forEach(l => {
+      const btn = document.createElement('button');
+      btn.className = `lang-choice-btn ${this.currentLang === l.code ? 'active' : ''}`;
+      btn.innerHTML = `
+        <span class="lang-flag">${l.flag}</span>
+        <div class="lang-info">
+          <strong>${l.native}</strong>
+          <span>${l.name}</span>
+        </div>
+      `;
+      btn.addEventListener('click', () => {
+        this.playPop();
+        this.setLanguage(l.code, `${l.flag} ${l.native}`);
+        modalLang?.classList.add('hidden');
+        this.speak(`Language set to ${l.name}`);
+
+        // Trigger Google Translate if available for non-core languages
+        try {
+          const select = document.querySelector('.goog-te-combo');
+          if (select) {
+            select.value = l.code;
+            select.dispatchEvent(new Event('change'));
+          }
+        } catch (e) {}
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  /* ========================================================
      DAILY STREAK SYSTEM (7-day = 7 coins, 14-day = 14 coins...)
      ======================================================== */
   initStreakSystem() {
@@ -1080,9 +1437,8 @@ class MathGalaxyApp {
     this.playChime();
     this.fireConfetti();
 
-    // Check if reached milestone: 7, 14, 21, 28...
     if (this.streak % 7 === 0) {
-      const rewardCoins = this.streak; // e.g. 7 coins for day 7, 14 coins for day 14!
+      const rewardCoins = this.streak;
       this.addCoins(rewardCoins);
       this.playFanfare();
       this.cheerMascot(`🔥 WOW! ${this.streak}-Day Streak Milestone! +${rewardCoins} 🪙 Coins!`, true);
@@ -1118,7 +1474,6 @@ class MathGalaxyApp {
       }
     }
 
-    // Update milestone steps
     const step7 = document.getElementById('m-step-7');
     const step14 = document.getElementById('m-step-14');
     const step21 = document.getElementById('m-step-21');
@@ -1264,34 +1619,9 @@ class MathGalaxyApp {
   }
 
   /* ========================================================
-     SETTINGS & MODALS (Language, Themes, Audio, Voice)
+     SETTINGS & MODALS (Themes, Audio, Voice)
      ======================================================== */
   initSettings() {
-    // Language Modal
-    const btnLang = document.getElementById('btn-language');
-    const modalLang = document.getElementById('language-modal');
-    const btnCloseLang = document.getElementById('btn-close-lang');
-
-    btnLang?.addEventListener('click', () => {
-      this.playPop();
-      modalLang?.classList.remove('hidden');
-    });
-
-    btnCloseLang?.addEventListener('click', () => {
-      modalLang?.classList.add('hidden');
-    });
-
-    document.querySelectorAll('.lang-choice-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        this.playPop();
-        document.querySelectorAll('.lang-choice-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        this.setLanguage(lang);
-        modalLang?.classList.add('hidden');
-      });
-    });
-
     // Theme Picker
     const btnTheme = document.getElementById('btn-theme-picker');
     const modalTheme = document.getElementById('theme-modal');
@@ -1357,6 +1687,13 @@ class MathGalaxyApp {
     localStorage.setItem('mg_coins', this.coins);
     this.updateStatsDisplay();
     this.showFloatingReward(`+${amount} 🪙`, '#header-coins-pill', 'reward-coins');
+  }
+
+  loseCoin(amount = 1) {
+    this.coins = Math.max(0, this.coins - amount);
+    localStorage.setItem('mg_coins', this.coins);
+    this.updateStatsDisplay();
+    this.showFloatingReward(`-${amount} 🪙`, '#header-coins-pill', 'reward-coins-lost');
   }
 
   addStars(amount) {
@@ -1436,7 +1773,7 @@ class MathGalaxyApp {
       const p = this.particles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.35; // gravity
+      p.vy += 0.35;
       p.rotation += p.vRot;
       p.life -= 0.015;
 
